@@ -1,5 +1,7 @@
 ## Connection Options to Ada Database Server
 
+![Connections!](connections.png "connection options")
+
 1. Through **web browser**, use **phpMyAdmin** hosted at [ADA server](https://ada.huntington.edu/phpmyadmin/)
 phpMyadmin is a PHP application that runs on a web server (NGINX) hosted on Ada and accesses the database server on Ada.
 
