@@ -1,79 +1,68 @@
-# CS415 Database Management
-## Fall 2025  
-### Practice Exercise #1 – DB-02  
+## Practice Exercises #1 - In-Class
+- CS 415 Database Management
+- Fall 2025  
+- MariaDB Essential Commands
+- DB-02, SQL-01
 
 ---
-
-## MariaDB Essential Commands
-
-### Web Client
+## MariaDB Web Client
 Use **phpMyAdmin** to connect to the MariaDB server hosted on `ada.huntington.edu`.
+phpMyAdmin is a web client interface to the database.
 
-- **Username**: your last name (all lowercase)  
-  Example: `smith`  
-- **Password**: `cs415` (all lowercase)  
+- **Username**: your last name (all lowercase)
+- Example: `smith`  
+- **Password**: Ask Prof. Lehman
 
-🔗 [phpMyAdmin on Ada](https://ada.huntington.edu/phpmyadmin/)
+[Click  here for phpMyAdmin on Ada](https://ada.huntington.edu/phpmyadmin/)
 
-➡️ In phpMyAdmin, click the **SQL** tab, enter commands, and press **Go**.
+In phpMyAdmin, click the **SQL** tab, enter commands, and press **Go**.
 
 ---
-
-### Basic Commands
-
-#### See database version
+## See database version
 ```sql
 select version();
 ````
 
-#### Show available databases
+## See available databases
 
 ```sql
 show databases;
 ```
 
-#### Select a database
+## Select a database
 
 ```sql
 use demo;
 ```
 
-#### List tables in the database
+## List tables in the database
 
 ```sql
 show tables;
 ```
 
-#### Show table structure
+## See table structure
 
 ```sql
 describe student;
 desc student;
-```
-
-#### Full table structure (with extra options)
-
-```sql
+show columns from student;
 show create table student;
 ```
 
----
-
-### Viewing Data
-
-#### Show all data in table format
+## Show all data in table format
 
 ```sql
 select * from student;
 ```
 
-#### Limit results (first X rows)
+## Limit results (first X rows)
 
 ```sql
 select * from student limit 5;
 ```
 
-#### Choose specific columns
+## Choose specific columns
 
 ```sql
 select first_name, last_name from student;
@@ -81,32 +70,24 @@ select first_name, last_name from student;
 
 ---
 
-### Account Management
-
-#### Change your database account password
+## Change your database account password
 
 ```sql
 set password = password("new_password");
 ```
 
-#### See users and passwords (admin only)
+## See users and passwords (usually only available to admin account)
 
 ```sql
 use mysql;
-select user, host, passwd from user;
+select user, host, password from user;
 ```
 
 ---
 
-### Logout
+## Logout
 
 In phpMyAdmin, click the **Logout** button (to the right of the Home button).
 
----
-
-*Last modified: Tuesday, August 26, 2025, 11:18 AM*
-
-```
-
----
+--- end ---
 
