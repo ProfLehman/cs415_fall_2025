@@ -1,5 +1,6 @@
 ## Practice Exercises #3 - In-Class
 - CS 415 Database Management
+- Fall 2025
 - DB-02, SQL-01, SQL-02
 
 ---
@@ -22,9 +23,11 @@ select distinct fee, hours from course;
 
 ## LIKE and Wildcards
 
-* `=` and `LIKE` behave the same for exact matches.
+*`LIKE` allows pattern matching
 * `%` matches zero or more characters.
 * `_` matches exactly one character.
+* `=` and `LIKE` behave the same for exact matches.
+* `NOT LIKE` returns rows that do not match the pattern
 
 ```sql
 -- exact match
