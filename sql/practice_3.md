@@ -69,27 +69,32 @@ select phone from student where phone not like "___234%";
 
 ---
 
-## IN and BETWEEN
-
-### IN operator
+## IN operator
 
 Shorthand for multiple `OR` conditions.
 
 ```sql
 select last, state 
 from student 
-where state in ("IL","IN");
+where state in ("IL", "IN");
 
 select last, state 
 from student 
-where state not in ("IL","IN","MI");
+where state not in ("IL", "IN", "MI");
 ```
 
-### BETWEEN operator
+## BETWEEN operator
 
-Shorthand for inclusive ranges.
+`BETWEEN` is shorthand or an easier way to specify a range using where conditions.
 
 ```sql
+-- where with >= and <=
+select last 
+from student 
+where last >= "Davis" and last <= "Ming"
+order by last;
+
+-- BETWEEN approach
 select last 
 from student 
 where last between "Davis" and "Ming"
