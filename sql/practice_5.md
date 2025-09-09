@@ -9,7 +9,7 @@
 Aggregations in SQL are operations that combine values from multiple rows into a single summary value. 
 Common aggregation functions include `COUNT`, `SUM`, `AVG`, `MIN`, and `MAX`. 
 
-These aggregations are often paired with `GROUP BY` to organize results into categories and `HAVING` to restrinct rows.
+These aggregations are often paired with `GROUP BY` to organize results into categories and `HAVING` to restrict rows.
 
 They are especially useful for analyzing data trends, producing summaries, and supporting decision-making from large datasets.
 
