@@ -3,7 +3,7 @@
 
 ## In-Class Lab For this lab, use the pet table below from the demo database
 
-Note: ** see solutions below **
+Note: **see solutions below**
 
 1. How can you see all the tables in the demo database?
 
