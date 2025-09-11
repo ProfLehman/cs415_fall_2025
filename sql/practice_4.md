@@ -137,7 +137,7 @@ WHERE species IN ('Cat', 'Dog');
 -- alternate approach
 SELECT *
 FROM pets
-WHERE species = "Cat" or species = "Dog");
+WHERE species = "Cat" or species = "Dog";
 
 ```
 
