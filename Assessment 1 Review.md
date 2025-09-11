@@ -3,7 +3,7 @@
 
 ---
 
-- Exam is on paper-based
+- Exam is paper-format
 - You may use one page front/back 8.5" by 11" of notes on the exam
 - Review Practice Exercises and Sample Labs
 - Review topics listed under Core Competencies on the course web page
