@@ -3,6 +3,7 @@
 
 ## In-Class Lab For this lab, use the pet table below from the demo database
 
+Note: ** see solutions below **
 
 1. How can you see all the tables in the demo database?
 
@@ -49,6 +50,146 @@
 |    19 | Willow  | Rabbit  | English Angora     |    6 | Sam Carter    | Bloomington  | 2018-03-07 |
 |    20 | Sunny   | Bird    | Canary             |    3 | Tina Evans    | Fort Wayne   | 2021-07-16 |
 +-------+---------+---------+--------------------+------+---------------+--------------+------------+
+```
+---
+
+## Sample Solutions
+Here you go—each item states the question and shows the SQL using your `pets` table (columns: `petid, name, species, breed, age, owner, city, birthday`).
+
+> Tip: if needed, select the database first:
+
+```sql
+USE demo;
+```
+
+---
+
+### 1) How can you see all the tables in the `demo` database?
+
+```sql
+SHOW TABLES;
+
+-- or, explicitly:
+SHOW TABLES FROM demo;
+```
+
+---
+
+### 2) Display the structure of the `pets` table (field names and data types)
+
+```sql
+DESCRIBE pets;
+-- equivalents:
+DESC pets;
+SHOW COLUMNS FROM pets;
+```
+
+---
+
+### 3) Show all columns and rows from the `pets` table sorted oldest to youngest by `birthday`
+
+```sql
+SELECT *
+FROM pets
+ORDER BY birthday ASC;   -- oldest (earliest date) first
+```
+
+---
+
+### 4) List the `name` and `species` of the first 5 pets
+
+```sql
+SELECT name, species
+FROM pets
+ORDER BY petid
+LIMIT 5;
+```
+
+---
+
+### 5) Find all pets that live in the city of “Fort Wayne”
+
+```sql
+SELECT *
+FROM pets
+WHERE city = 'Fort Wayne';
+```
+
+---
+
+### 6) List all pets whose names start with the letter “B”
+
+```sql
+SELECT *
+FROM pets
+WHERE name LIKE 'B%';
+```
+
+---
+
+### 7) Show all pets that are either cats or dogs
+
+```sql
+SELECT *
+FROM pets
+WHERE species IN ('Cat', 'Dog');
+
+-- alternate approach
+SELECT *
+FROM pets
+WHERE species = "Cat" or species = "Dog");
+
+```
+
+---
+
+### 8) Find pets with birthdays in the year 2020
+
+```sql
+-- Option A: using YEAR()
+SELECT *
+FROM pets
+WHERE YEAR(birthday) = 2020;
+
+-- alternate
+SELECT *
+FROM pets
+WHERE birthday >= '2020-01-01'
+  AND birthday <  '2021-01-01';
+
+-- alternate
+SELECT *
+FROM pets
+WHERE birthday BETWEEN '2020-01-01'
+  AND '2021-01-01';
+ 
+  
+```
+
+---
+
+### 9) List pets with ages between 3 and 7 years old
+
+```sql
+SELECT *
+FROM pets
+WHERE age BETWEEN 3 AND 7;   -- inclusive of 3 and 7
+
+-- alternate
+SELECT *
+FROM pets
+WHERE age >= 3 AND age <= 7;   -- inclusive of 3 and 7
+
+```
+
+---
+
+### 10) List all of the species of pets (each species listed one time)
+
+```sql
+SELECT DISTINCT species
+FROM pets
+ORDER BY species;
 ```
 
 -- end --
