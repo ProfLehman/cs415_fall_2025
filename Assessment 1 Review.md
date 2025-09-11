@@ -9,7 +9,7 @@
 - Review topics listed under Core Competencies on the course web page
 
 # Core Competencies Covered
-- DB-01 – Key database concepts, benefits, relational model basics. (Asse
+- DB-01 – Key database concepts, benefits, relational model basics.
 - DB-02 – Connect to MariaDB/MySQL, navigate databases, list tables, describe structures.
 - SQL-01 – Basic SELECT queries: columns, aliases, functions, sorting.
 - SQL-02 – Filtering with WHERE, LIKE, IN, BETWEEN, and date functions.
