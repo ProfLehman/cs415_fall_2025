@@ -79,6 +79,7 @@ INSERT INTO `student` VALUES ('s1','potter','f3'),('s2','granger','f1'),('s3','w
 
 ### Cartesian Product (cross join)
 Match every row with every row. Result will be row_count_table1 x row_count_table2. In this example 5 x 9 = 45 rows. 
+
 ```sql
 select student.id, student.name, faculty.id, faculty.name
 
@@ -136,6 +137,7 @@ from student, faculty;
 --- 
 
 ### Equi Join (using WHERE)
+Equi Joins remove rows from a cross product that should not be combined. In other words they key the rows from each table that match.
 
 ```sql
 select student.id, student.name,
@@ -323,8 +325,20 @@ from student right join faculty on
 ```
 
 **Result:**
+| id   | name     | id   | name       |
+|------|----------|------|------------|
+| s2   | granger  | f1   | mcgonagall |
+| s3   | weasley  | f1   | mcgonagall |
+| s9   | thomas   | f1   | mcgonagall |
+| s4   | malfoy   | f2   | snape      |
+| s6   | goyle    | f2   | snape      |
+| s1   | potter   | f3   | hagrid     |
+| s5   | crabbe   | NULL | NULL       |
+| s7   | finnigan | NULL | NULL       |
+| s8   | wood     | NULL | NULL       |
+| NULL | NULL     | f4   | flitwick   |
+| NULL | NULL     | f5   | binns      |
 
-<!-- paste results here -->
 
 ---
 
@@ -339,8 +353,11 @@ where student.id is NULL;
 ```
 
 **Result:**
+| Faculty | name     |
+|---------|----------|
+| f4      | flitwick |
+| f5      | binns    |
 
-<!-- paste results here -->
 
 ---
 
@@ -356,7 +373,12 @@ order by faculty.id;
 ```
 
 **Result:**
-
-<!-- paste results here -->
++---------+------------+
+| Faculty | name       |
++---------+------------+
+| f1      | mcgonagall |
+| f2      | snape      |
+| f3      | hagrid     |
++---------+------------+
 
 -- end --
