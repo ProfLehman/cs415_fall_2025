@@ -209,9 +209,12 @@ on s.fid = f.id;
 
 ---
 
+
 ## Left Outer Join
 
 ### `student` left join `faculty`
+All the students and matching faculty. If no matching faculty, show students with faculty as null. Same as faculty right join student.
+
 ```sql
 select student.id, student.name, faculty.id, faculty.name
 
@@ -232,6 +235,8 @@ from student left join faculty on student.fid = faculty.id;
 
 
 ### `faculty` left join `student`
+All the faculty and matching students. If no matching students, show faculty with students as null. Same as student right join faculty.
+
 ```sql
 select student.id, student.name, faculty.id, faculty.name
 
@@ -255,23 +260,51 @@ from faculty left join student on student.fid = faculty.id;
 
 ## Right Outer Join
 
-```sql
-select student.id, student.name,
-       faculty.id, faculty.name
-from student right join faculty on
-     student.fid = faculty.id;
-```
+### student right join faculty
+All the faculty and matching students. If no matching students, show faculty with student as null. Same as faculty left join student.
 
 ```sql
-select student.id, student.name,
-       faculty.id, faculty.name
-from faculty right join student on
-     student.fid = faculty.id;
+select student.id, student.name, faculty.id, faculty.name
+
+from student right join faculty on student.fid = faculty.id;
 ```
 
 **Result:**
+| id   | name    | id | name       |
+|------|---------|----|------------|
+| s1   | potter  | f3 | hagrid     |
+| s2   | granger | f1 | mcgonagall |
+| s3   | weasley | f1 | mcgonagall |
+| s4   | malfoy  | f2 | snape      |
+| s6   | goyle   | f2 | snape      |
+| s9   | thomas  | f1 | mcgonagall |
+| NULL | NULL    | f4 | flitwick   |
+| NULL | NULL    | f5 | binns      |
 
-<!-- paste results here -->
+
+### faculty right join student
+All the students and matching faculty. If no matching faculty, show faculty as null. Same as student left join faculty.
+
+```sql
+select student.id, student.name, faculty.id, faculty.name
+
+from faculty right join student on student.fid = faculty.id;
+```
+
+**Result:**
+| id | name     | id   | name       |
+|----|----------|------|------------|
+| s2 | granger  | f1   | mcgonagall |
+| s3 | weasley  | f1   | mcgonagall |
+| s9 | thomas   | f1   | mcgonagall |
+| s4 | malfoy   | f2   | snape      |
+| s6 | goyle    | f2   | snape      |
+| s1 | potter   | f3   | hagrid     |
+| s5 | crabbe   | NULL | NULL       |
+| s7 | finnigan | NULL | NULL       |
+| s8 | wood     | NULL | NULL       |
+
+
 
 ---
 
