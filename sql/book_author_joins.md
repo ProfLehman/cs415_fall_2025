@@ -320,16 +320,26 @@ ON a.aid = au.aid;
 
 ```sql
 
---- x3 table cross product join
+--- x3 table cross product inner join
 select a.aid, a.name, au.bid, b.title
 from author a, authorship au, book b
 where a.aid = au.aid
 and au.bid = b.bid;
 
---- x3 table inner join using JOIN
+--- x3 inner join using JOIN
 select a.aid, a.name, au.bid, b.title
 from (author a JOIN authorship au ON a.aid = au.aid)
 JOIN book b ON au.bid = b.bid;
+
++-----+-------+------+-----------------------+
+| aid | name  | bid  | title                 |
++-----+-------+------+-----------------------+
+|   1 | Alice |    4 | Delilicious Donuts    |
+|   3 | Carol |    1 | Awful Ants Are Around |
+|   5 | Erin  |    1 | Awful Ants Are Around |
+|   4 | Dan   |    5 | Easy Excellent Eggs   |
+|   4 | Dan   |    2 | Beautiful Barns       |
++-----+-------+------+-----------------------+
 ```
 
 
@@ -339,6 +349,18 @@ JOIN book b ON au.bid = b.bid;
 select a.aid, a.name, au.bid, b.title
 from (author a LEFT JOIN authorship au ON a.aid = au.aid)
 LEFT JOIN book b ON au.bid = b.bid;
+
++-----+-------+------+-----------------------+
+| aid | name  | bid  | title                 |
++-----+-------+------+-----------------------+
+|   1 | Alice |    4 | Delilicious Donuts    |
+|   3 | Carol |    1 | Awful Ants Are Around |
+|   5 | Erin  |    1 | Awful Ants Are Around |
+|   4 | Dan   |    5 | Easy Excellent Eggs   |
+|   4 | Dan   |    2 | Beautiful Barns       |
+|   5 | Erin  |    6 | NULL                  |
+|   2 | Bob   | NULL | NULL                  |
++-----+-------+------+-----------------------+
 ```
 
 ### Dan's books
@@ -348,6 +370,13 @@ select a.aid, a.name, au.bid, b.title
 from (author a JOIN authorship au ON a.aid = au.aid)
 JOIN book b ON au.bid = b.bid
 WHERE a.name = "Dan" ORDER by b.title;
+
++-----+------+------+---------------------+
+| aid | name | bid  | title               |
++-----+------+------+---------------------+
+|   4 | Dan  |    2 | Beautiful Barns     |
+|   4 | Dan  |    5 | Easy Excellent Eggs |
++-----+------+------+---------------------+
 ```
 
 ### authors and number of book authorships
@@ -407,6 +436,3 @@ having count(authorship.bid) > 1;
 --- end ---
 
 
---- end ---
-
-```
