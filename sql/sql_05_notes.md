@@ -1,27 +1,40 @@
+# SQL-05 notes (Draft)
+fall 2025
+prof. lehman
+
+## overview
+
+MariaDB is a multi-user database management system. Each user has access rights to one or more databases in the system. The rights to each database vary. For example, as user may be limited to selecting data from one database.  In another database, they may be able to delete data.
+
+## creating a database
+
+`create database` is used to create a database.  A database serves as a collection of related tables. 
 
 ```sql
+create database database_name;
+```
 
--- SQL-05 notes (Draft)
--- fall 2025
--- prof. lehman
+## deleting a database
 
--- show databases;
+`drop database` can be used to delete and remove a database.
 
--- use the database with your last name to create tables
+```sql
+drop database database_name;
+```
 
--- create database_name;
--- drop database database_name;
+Note: Each student in CS415 may delete (and create) a database with their last name as the identifier. The database is already created.
 
--- see SQL create
--- show create table_name 
+## Creating a table with a primary key
 
--- drop table table_name
+Create Table is used to create tables.  
+Each field is listed with the data type. 
+Fields may be Null or Not Null.  
+One or more fields are generally listed as the `Primary Key`.
+Auto_Increment can be used to assign primary keys sequential numbers when inserting data.
 
+Note: Use the database with your last name to create tables.
 
-
--- 7-1 Create a table with five or more fields.  Include a primary key.  
---- Include int, varchar, char, and date field types.
-
+```sql
 CREATE TABLE person (
 	id int NOT NULL AUTO_INCREMENT,
 	name varChar(30) NULL,
@@ -29,31 +42,62 @@ CREATE TABLE person (
 	birthday date NULL,
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB;
+```
 
+## Deleting a table
 
+Tables can be deleted with the 'drop table` command.
+Notice that the table and data are lost immediately.  **Be Careful!!!**
 
--- 7-2 Create an insert statement to add a new record using field names similar to example shown.
+```sql
+drop table person;
+```
 
+## Inserting data with field names
+
+```sql
+-- fields in the same order as the table
+insert into person (id, name, major, birthday) 
+values (1,"Alice", "cs", "2005-01-09");
+
+-- field in a different order than the table
 insert into person (id, name, major, birthday)
-values (1,"alice", "cs", "1992-01-09");
-
--- need to keep field order correct
-insert into person (id, name, major, birthday)
-values (1,"cs", "Alic", "1992-01-09");
+values (2, "cs", "Bob", "2006-12-03");
 
 --this order also works
-insert into person (id, major, name,   birthday)
-       values      (1,  "cs", "Alice", "1992-01-09");
+insert into person (birthday, id, major, name)
+       values ("2007-03-03", 3, "cs", "Carol");
 
 -- let auto increment choose id .. 1, 2, 3, 4...
+-- thus should be id of 4 if you execute this example in order
 insert into person (name, major, birthday)
-values ("alice", "cs", "1992-01-09");
+values ("Dan", "cs", "2002-02-04");
 
 -- this also works as the only field that is required is the id
--- which is an autonumber thus it creates a row
+-- which is an autonumber, thus it creates a new row with
 --  5, null, null, null
 -- where 5 is the next available id
 insert into person () values();
+
+select * from person;
+```
+
+## insert statement without field names
+
+Data can be inserted without field names as long as the field order matches the table.
+
+```sql
+insert into person 
+values (6,"greta", "bio", "1993-12-11");
+
+insert into person 
+values (7,"MA", "Erik", "1993-12-11");
+
+```
+
+
+
+
 
 
 
@@ -65,14 +109,6 @@ values (2,"bob", "cs", "1992-05-18")
 
 
 
--- 7-4  Create an insert statement without field names
---      The field order must match the order for table create
-
-insert into person 
-values (6,"greta", "bio", "1993-12-11");
-
-insert into person 
-values (7,"MA", "Erik", "1993-12-11");
 
 
 
