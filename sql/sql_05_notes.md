@@ -1,6 +1,13 @@
-# SQL-05 notes (Draft)
+# SQL-05 Notes
+
 fall 2025
 prof. lehman
+
+SQL-05 topics
+- Data Manipulation: INSERT, UPDATE, DELETE 
+- transactions (BEGIN, COMMIT, ROLLBACK)
+- ACID
+
 
 ## overview
 
@@ -200,6 +207,8 @@ update person set major = "cs";
 select * from person;
 commit;
 ```
+
+Note: In MariaDB, transactions require the InnoDB storage engine because it is designed to support ACID properties. Unlike MyISAM (which lacks transaction control), InnoDB provides features such as row-level locking, rollback, and crash recovery, making it the standard choice for reliable transaction processing.
 
 --- end ---
 
