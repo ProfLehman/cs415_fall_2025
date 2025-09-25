@@ -84,28 +84,32 @@ select * from person;
 
 ## insert statement without field names
 
-Data can be inserted without field names as long as the field order matches the table.
+Data can be inserted without field names as long as the field order \
+matches the table ***and*** all fields are entered.
 
 ```sql
 insert into person 
-values (6,"greta", "bio", "1993-12-11");
+values (6,"Fran", "bio", "2009-12-21");
 
 insert into person 
-values (7,"MA", "Erik", "1993-12-11");
+values (7,"MA", "Greta", "2007-12-19");
 
+select * from person;
 ```
 
+## insert statement with multiple rows
 
+A single insert statement can be used to add multiple rows. 
+Notice in this example that the `id` field is not used as `auto_increment` will automatically add the next id.
 
+```sql
+insert into person (name, major, birthday)
+values ("Hank", "cs", "2003-05-18")
+,("Ilsa", "math", "1999-06-09")
+,("Jen", "math", "1971-05-18");
 
-
-
-
--- 7-3 Create an insert statement that inserts two or more rows
-
-insert into person (id, name, major, birthday)
-values (2,"bob", "cs", "1992-05-18")
-,(3,"carol", "math", "1994-06-09") ;
+select * from person;
+```
 
 
 
