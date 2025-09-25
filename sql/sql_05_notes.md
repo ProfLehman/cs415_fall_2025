@@ -10,12 +10,12 @@
 -- use the database with your last name to create tables
 
 -- create database_name;
--- drop database;
+-- drop database database_name;
 
 -- see SQL create
 -- show create table_name 
 
--- drop table_name
+-- drop table table_name
 
 
 
