@@ -1,3 +1,8 @@
+# Book Author Joins Example
+
+
+## ER Model
+
 ```mermaid
 erDiagram
     AUTHOR {
@@ -15,231 +20,393 @@ erDiagram
         int bid FK
     }
 
-    AUTHOR ||--o{ AUTHORSHIP : writes
-    BOOK   ||--o{ AUTHORSHIP : written_by
+    AUTHOR o|--o{ AUTHORSHIP  : writes
+    BOOK   o|--o{ AUTHORSHIP  : written_by
 ```
 
-Perfect — here’s the same set of **student-facing questions**, now with the **result tables included**. Students will need to write the SQL that produces these outputs.
 
 ---
 
-### Author / Authorship Practice Questions
+## Creating Tables
 
-1. **Cross Product Basics**
+Execute the following SQL code in your database to create the book, authorship, author tables
 
-   * How many rows result when you take the cross product of the `author` and `authorship` tables?
-   * How many rows result when you take the cross product of the `author`, and `authorship` '`and book` tables?
+```sql
+-- sample database for demonstrating joins (create tables in your database)
+--
+--
+--   author 1:1 <---> 0:M authorship 0:M <---> 1:1 book
+--
+--   author will have 0 or more authorships
+--   book will have 0 or many authorships
+--
+--   authorship will specify 0 or 1 author and 0 or 1 book
+-- 
 
-   **Result:**
+CREATE TABLE author (
+    aid int not null,
+	name varchar(32),
+	PRIMARY KEY (aid)
+) ENGINE=InnoDB;
 
+INSERT INTO author VALUES 
+(1, "Alice"),
+(2, "Bob"),
+(3, "Carol"),
+(4, "Dan"),
+(5, "Erin");
 
+CREATE TABLE book (
+    bid int not null,
+	title varchar(32),
+	PRIMARY KEY (bid)
+) ENGINE=InnoDB;
+
+INSERT INTO book VALUES 
+(1, "Awful Ants Are Around"),
+(2, "Beautiful Barns"),
+(3, "Crazy Coders Create Chaos"),
+(4, "Delicious Donuts"),
+(5, "Easy Excellent Eggs");
+
+CREATE TABLE authorship (
+    aid int,
+	bid int
+) ENGINE=InnoDB;
+
+INSERT INTO authorship VALUES 
+(1, 4),
+(3, 1),
+(6, 5),
+(5, 1),
+(4, 5),
+(4, 2),
+(5, 6);
+
+```
+---
+# View rows in each table
+
+Run the following SQL to see the rows in each table
+
+```sql
+
+select * from author;
++-----+-------+
+| aid | name  |
++-----+-------+
+|   1 | Alice |
+|   2 | Bob   |
+|   3 | Carol |
+|   4 | Dan   |
+|   5 | Erin  |
++-----+-------+
+
+select * from book
++-----+---------------------------+
+| bid | title                     |
++-----+---------------------------+
+|   1 | Awful Ants Are Around     |
+|   2 | Beautiful Barns           |
+|   3 | Crazy Coders Create Chaos |
+|   4 | Delilicious Donuts        |
+|   5 | Easy Excellent Eggs       |
++-----+---------------------------+
+
+select * from authorship;
++------+------+
+| aid  | bid  |
++------+------+
+|    1 |    4 |
+|    3 |    1 |
+|    6 |    5 |
+|    5 |    1 |
+|    4 |    5 |
+|    4 |    2 |
+|    5 |    6 |
++------+------+
+```
 ---
 
-2. **Joining Two Tables**
+## Practice Questions
 
-   * Show each author’s ID, name, and the book IDs from the `authorship` table that match.
-   * How do we avoid listing the author ID twice in the output?
-   * Redo the query using table aliases.
 
-   **Result:**
+### Cross Product Basics
 
-   ```
-   +-----+-------+------+
-   | aid | name  | bid  |
-   +-----+-------+------+
-   |   1 | Alice |    4 |
-   |   3 | Carol |    1 |
-   |   5 | Erin  |    1 |
-   |   4 | Dan   |    5 |
-   |   4 | Dan   |    2 |
-   |   5 | Erin  |    6 |
-   +-----+-------+------+
-   ```
+   How many rows result when you take the cross product of the `author` and `authorship` tables?
+   
+   x2 table cross product author and authorship
+   x5 rows * x8 rows = 35 rows (every combination) 
 
----
+   How many rows result when you take the cross product of the `author`, and `authorship` '`and book` tables?
+   
+   x3 table cross product author and authorship and book
+   x5 rows * x8 rows * x5 = 175 rows (every combination) 
 
-3. **INNER JOIN vs. CROSS PRODUCT**
 
-   * Write a join between `author` and `authorship` using the `JOIN ON` syntax.
-   * How do the results compare to the cross product with a `WHERE` condition?
+```sql
+select count(*) from author, authorship;
++----------+
+| count(*) |
++----------+
+|       35 |
++----------+
 
-   **Result:** (same as above)
+select count(*) from author, authorship, book;
++----------+
+| count(*) |
++----------+
+|      175 |
++----------+
 
-   ```
-   +-----+-------+------+
-   | aid | name  | bid  |
-   +-----+-------+------+
-   |   1 | Alice |    4 |
-   |   3 | Carol |    1 |
-   |   5 | Erin  |    1 |
-   |   4 | Dan   |    5 |
-   |   4 | Dan   |    2 |
-   |   5 | Erin  |    6 |
-   +-----+-------+------+
-   ```
+```
 
----
 
-4. **LEFT JOIN**
+### x2 table join via cross product of author and authorship
 
-   * List all authors, showing book IDs if available.
-   * Which author(s) appear with `NULL` values in the result? Why?
+```sql
 
-   **Result:**
+select author.aid, authorship.aid, author.name, authorship.bid
+from author, authorship
+where author.aid = authorship.aid;
 
-   ```
-   +-----+-------+------+
-   | aid | name  | bid  |
-   +-----+-------+------+
-   |   1 | Alice |    4 |
-   |   3 | Carol |    1 |
-   |   5 | Erin  |    1 |
-   |   4 | Dan   |    5 |
-   |   4 | Dan   |    2 |
-   |   5 | Erin  |    6 |
-   |   2 | Bob   | NULL |
-   +-----+-------+------+
-   ```
++-----+------+-------+------+
+| aid | aid  | name  | bid  |
++-----+------+-------+------+
+|   1 |    1 | Alice |    4 |
+|   3 |    3 | Carol |    1 |
+|   5 |    5 | Erin  |    1 |
+|   4 |    4 | Dan   |    5 |
+|   4 |    4 | Dan   |    2 |
+|   5 |    5 | Erin  |    6 |
++-----+------+-------+------+
 
----
+-- Generally would only show one copy of the aid (can use either table)
+select author.aid, author.name, authorship.bid
+from author, authorship
+where author.aid = authorship.aid;
 
-5. **RIGHT JOIN**
+-- using alias
+select a.aid, a.name, au.bid
+from author a, authorship au
+where a.aid = au.aid;
 
-   * List all rows from the `authorship` table, showing author names if available.
-   * Which authorship record(s) show `NULL` for the author? Why?
++-----+-------+------+
+| aid | name  | bid  |
++-----+-------+------+
+|   1 | Alice |    4 |
+|   3 | Carol |    1 |
+|   5 | Erin  |    1 |
+|   4 | Dan   |    5 |
+|   4 | Dan   |    2 |
+|   5 | Erin  |    6 |
++-----+-------+------+
+```
 
-   **Result:**
 
-   ```
-   +------+-------+------+
-   | aid  | name  | bid  |
-   +------+-------+------+
-   |    1 | Alice |    4 |
-   |    3 | Carol |    1 |
-   | NULL | NULL  |    5 |
-   |    5 | Erin  |    1 |
-   |    4 | Dan   |    5 |
-   |    4 | Dan   |    2 |
-   |    5 | Erin  |    6 |
-   +------+-------+------+
-   ```
+### x2 table join via JOIN ON of author and authorship
 
----
+```sql
 
-6. **FULL OUTER JOIN**
+select author.aid, author.name, authorship.bid
+from author JOIN authorship
+ON author.aid = authorship.aid;
 
-   * Combine results of a left join and right join to show all data.
-   * Which rows only appear in one of the two tables?
+-- using alias
+select a.aid, a.name, au.bid
+from author a JOIN authorship au
+ON a.aid = au.aid;
 
-   **Result:**
++-----+-------+------+
+| aid | name  | bid  |
++-----+-------+------+
+|   1 | Alice |    4 |
+|   3 | Carol |    1 |
+|   5 | Erin  |    1 |
+|   4 | Dan   |    5 |
+|   4 | Dan   |    2 |
+|   5 | Erin  |    6 |
++-----+-------+------+
+```
 
-   ```
-   +------+-------+------+
-   | aid  | name  | bid  |
-   +------+-------+------+
-   |    1 | Alice |    4 |
-   |    3 | Carol |    1 |
-   |    5 | Erin  |    1 |
-   |    4 | Dan   |    5 |
-   |    4 | Dan   |    2 |
-   |    5 | Erin  |    6 |
-   |    2 | Bob   | NULL |
-   | NULL | NULL  |    5 |
-   +------+-------+------+
-   ```
 
----
+### left join of author and authorship
+ALL data in author (left) that matches with right, if author does not have match, show null
 
-7. **Three-Table Join**
+```sql
+select a.aid, a.name, au.bid
+from author a LEFT JOIN authorship au
+ON a.aid = au.aid;
 
-   * Join `author`, `authorship`, and `book` to display each author’s name alongside the book titles they are associated with.
-   * What happens to Bob (author 2) when included in this join?
++-----+-------+------+
+| aid | name  | bid  |
++-----+-------+------+
+|   1 | Alice |    4 |
+|   3 | Carol |    1 |
+|   5 | Erin  |    1 |
+|   4 | Dan   |    5 |
+|   4 | Dan   |    2 |
+|   5 | Erin  |    6 |
+|   2 | Bob   | NULL |
++-----+-------+------+
+```
 
-   **Result:**
+### right join of author and authorship
 
-   ```
-   +-----+-------+------+----------------------------+
-   | aid | name  | bid  | title                      |
-   +-----+-------+------+----------------------------+
-   |   1 | Alice |    4 | Delilicious Donuts         |
-   |   3 | Carol |    1 | Awful Ants Are Around      |
-   |   5 | Erin  |    1 | Awful Ants Are Around      |
-   |   4 | Dan   |    5 | Easy Excellent Eggs        |
-   |   4 | Dan   |    2 | Beautiful Barns            |
-   |   5 | Erin  |    6 | NULL (invalid reference)   |
-   +-----+-------+------+----------------------------+
-   ```
+ALL data in authorship (right) that matches with left
+if authorship does not have match, show null
 
----
+```sql
+select a.aid, a.name, au.bid
+from author a RIGHT JOIN authorship au
+ON a.aid = au.aid;
 
-8. **Filtered Three-Table Join**
++------+-------+------+
+| aid  | name  | bid  |
++------+-------+------+
+|    1 | Alice |    4 |
+|    3 | Carol |    1 |
+| NULL | NULL  |    5 |
+|    5 | Erin  |    1 |
+|    4 | Dan   |    5 |
+|    4 | Dan   |    2 |
+|    5 | Erin  |    6 |
++------+-------+------+
 
-   * Show all book titles written by **Dan**, ordered by title.
+-- note: above is same as authorship LEFT JOIN author
+--        ie.   tableA left join tableB   same as
+--              tableB right join tableA
+--
 
-   **Result:**
+select a.aid, a.name, au.bid
+from authorship au LEFT JOIN author a
+ON a.aid = au.aid;
+```
 
-   ```
-   +-----+-------+------+---------------------+
-   | aid | name  | bid  | title               |
-   +-----+-------+------+---------------------+
-   |   4 | Dan   |    2 | Beautiful Barns     |
-   |   4 | Dan   |    5 | Easy Excellent Eggs |
-   +-----+-------+------+---------------------+
-   ```
+### full join or full outer join
 
----
+union of a left and right join
+no full join operator in mariadb (duck tape approach)
 
-9. **Aggregations**
+```sql
 
-   * List each author ID and the number of books they have authored.
-   * Which authors appear to have invalid or extra references?
+select a.aid, a.name, au.bid
+from author a LEFT JOIN authorship au
+ON a.aid = au.aid
 
-   **Result:**
+UNION
 
-   ```
-   +------+------------+
-   | aid  | count(bid) |
-   +------+------------+
-   |    1 |          1 |
-   |    3 |          1 |
-   |    4 |          2 |
-   |    5 |          2 |
-   |    6 |          1 |
-   +------+------------+
-   ```
+select a.aid, a.name, au.bid
+from author a RIGHT JOIN authorship au
+ON a.aid = au.aid;
 
----
++------+-------+------+
+| aid  | name  | bid  |
++------+-------+------+
+|    1 | Alice |    4 |
+|    3 | Carol |    1 |
+|    5 | Erin  |    1 |
+|    4 | Dan   |    5 |
+|    4 | Dan   |    2 |
+|    5 | Erin  |    6 |
+|    2 | Bob   | NULL |
+| NULL | NULL  |    5 |
++------+-------+------+
 
-10. **Aggregation with HAVING**
+```
 
-    * List only the authors who have written more than one book.
 
-    **Result:**
+### x3 table joins
 
-    ```
-    +------+------------+
-    | aid  | count(bid) |
-    +------+------------+
-    |    4 |          2 |
-    |    5 |          2 |
-    +------+------------+
-    ```
+```sql
 
----
+--- x3 table cross product join
+select a.aid, a.name, au.bid, b.title
+from author a, authorship au, book b
+where a.aid = au.aid
+and au.bid = b.bid;
 
-11. **Aggregation with Join**
+--- x3 table inner join using JOIN
+select a.aid, a.name, au.bid, b.title
+from (author a JOIN authorship au ON a.aid = au.aid)
+JOIN book b ON au.bid = b.bid;
+```
 
-    * Show each author’s ID, name, and count of authored books, but include only those who have authored two or more.
 
-    **Result:**
+### What about Bob? no authorship record
 
-    ```
-    +-----+------+-----------------------+
-    | aid | name | count(authorship.bid) |
-    +-----+------+-----------------------+
-    |   4 | Dan  |                     2 |
-    |   5 | Erin |                     2 |
-    +-----+------+-----------------------+
-    ```
+```sql
+select a.aid, a.name, au.bid, b.title
+from (author a LEFT JOIN authorship au ON a.aid = au.aid)
+LEFT JOIN book b ON au.bid = b.bid;
+```
 
----
+### Dan's books
+
+```sql
+select a.aid, a.name, au.bid, b.title
+from (author a JOIN authorship au ON a.aid = au.aid)
+JOIN book b ON au.bid = b.bid
+WHERE a.name = "Dan" ORDER by b.title;
+```
+
+### authors and number of book authorships
+aggregation, group by
+
+```sql
+select aid, count(bid) from authorship group by aid;
+
++------+------------+
+| aid  | count(bid) |
++------+------------+
+|    1 |          1 |
+|    3 |          1 |
+|    4 |          2 |
+|    5 |          2 |
+|    6 |          1 |
++------+------------+
+
+```
+
+### authors and number of book authorships
+aggregation, group by, having
+
+```sql
+
+select aid, count(bid) 
+from authorship 
+group by aid
+having count(bid) > 1;
+
++------+------------+
+| aid  | count(bid) |
++------+------------+
+|    4 |          2 |
+|    5 |          2 |
++------+------------+
+```
+
+
+### inner join via cross product with aggregation
+
+```sql
+select author.aid, author.name, count(authorship.bid) 
+from author, authorship
+where author.aid = authorship.aid 
+group by authorship.aid
+having count(authorship.bid) > 1;
+
++-----+------+-----------------------+
+| aid | name | count(authorship.bid) |
++-----+------+-----------------------+
+|   4 | Dan  |                     2 |
+|   5 | Erin |                     2 |
++-----+------+-----------------------+
+```
+
+--- end ---
+
+
+--- end ---
+
+```
