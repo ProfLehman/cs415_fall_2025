@@ -99,7 +99,7 @@ select * from person;
 
 ```
 
-## insert multiple rows
+## Insert multiple rows
 
 A single insert statement can be used to add multiple rows. 
 Notice in this example that the `id` field is not used as `auto_increment` will automatically add the next id.
@@ -170,25 +170,37 @@ select * from majors;
 
 ```
 
+---
 
+**CRUD** stands for **Create, Read, Update, and Delete**, the four basic operations performed on data in a relational database. *Create* inserts new records, *Read* retrieves existing data, *Update* modifies existing records, and *Delete* removes records. These operations form the foundation of nearly all database applications and are supported through SQL statements such as `INSERT`, `SELECT`, `UPDATE`, and `DELETE`.
 
+**ACID** represents the four key properties of a reliable transaction: **Atomicity** (all operations succeed or none do), **Consistency** (transactions move the database from one valid state to another), **Isolation** (transactions run independently without interfering), and **Durability** (committed changes persist even after failures). Together, ACID ensures that data remains accurate and dependable, even in the presence of errors or concurrent users.
 
-## Create a transaction that either deletes or inserts records, then rolls back the changes.
+**Transactions** are sequences of one or more SQL operations executed as a single logical unit of work. A transaction begins with `BEGIN` and must be explicitly ended with either `COMMIT`, which saves the changes permanently, or `ROLLBACK`, which undoes them. By grouping CRUD operations inside transactions, databases protect against partial updates and allow developers to recover gracefully from mistakes or unexpected errors.
 
+---
+## Transactions that roll back
+
+`begin` and 'rollback' will **undo** most changes to the database.
+
+```sql
 begin;
 delete from person;
 select * from person;
 rollback;
+```
 
+## Transactions that commit
 
-## Create a transaction that either updates or inserts records, then commits the changes.
+`begin` and 'commit' will **keep** most changes to the database.
 
+```sql
 begin;
 update person set major = "cs";
 select * from person;
 commit;
-
 ```
+
 --- end ---
 
 
