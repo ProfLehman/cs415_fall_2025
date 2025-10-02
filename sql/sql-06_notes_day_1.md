@@ -1,9 +1,8 @@
 ```sql
 --
--- SQL-06 Topics
+-- SQL-06 Topics (Day 1)
 -- your name
 -- cs415 fall 2025
---
 --
 
 --create tables member and post
