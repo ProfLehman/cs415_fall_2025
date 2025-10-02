@@ -16,7 +16,7 @@ CREATE TABLE person (
 
 -- integer 4 bytes
 -- varChar(20) 1 byte length plus 1 byte each CHARACTER
---  so "Foreseter" is 9 bytes plus 1 for length = 10 bytes
+--  so "Forester" is 9 bytes plus 1 for length = 10 bytes
 -- date is 3 bytes
 -- total bytes: 17
 
