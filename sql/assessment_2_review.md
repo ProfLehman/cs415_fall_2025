@@ -11,8 +11,11 @@ CREATE TABLE walker (
 	phone char(10)
 )ENGINE=INNODB;
 
+-- to delete
+drop table walker;
+
 -- create table with primary key option #1
-CREATE TABLE walker2 (
+CREATE TABLE walker (
 	walkerID smallint,
 	name varchar(30),
 	phone char(10),
@@ -21,15 +24,20 @@ CREATE TABLE walker2 (
 
 -- create table with primary key option #2
 -- also adds constraint for email being unique
-CREATE TABLE walker2 (
+
+CREATE TABLE walker (
 	walkerID smallint primary key,
 	name varchar(30),
-	phone char(10)
+	phone char(10),
 	email varChar(100) UNIQUE
 )ENGINE=INNODB;
 
-insert into walker2 values (-9, "test", "123");
+-- signed values allow negative numbers
+-- smallint unsigned  would not allow -9
+insert into walker values (-9, "test name", "123", "email@hu.edu");
 
+-- note: to rename a table use
+alter table walker2 rename to walker;
 
 --#2
 alter table walker add constraint walker_pk primary key (walkerID);
@@ -131,8 +139,6 @@ values ('Jose Rodriguez', '2005-10-3', 50.0, 3),
 insert into sponsor (id, walkerId, date, amount, name) 
 values (32768, 2, '2005-10-2', 100.00, 'the Joker');
 
-insert into sponsor (id, walkerId, date, amount, name) 
-values (32767, 2, '2005-10-2', 100.00, 'the Joker');
 
 -- add another record
 insert into sponsor (name, date, walkerId) 
@@ -237,18 +243,90 @@ select * from alldata;
 -- and apply queries
 select * from alldata where walker = "Jane Adams";
 
+
+-- Joins
+
+-- *** dropping foreign key to demo values in sponsor that do not have a walker
+ALTER TABLE sponsor DROP FOREIGN KEY fk_walkerID;
+
+-- #26-How many rows are returned by a cross product of walker and sponsor tables?
+-- multiply number of rows in walker x number rows in sponsor
+select count(*) from walker, sponsor;
+
+-- #26-Display all walkers that have at least one sponsor (using cross product ie. table, table)
+
+-- with duplicates
+SELECT w.walkerID, w.name, w.phone
+FROM walker w, sponsor s
+WHERE w.walkerID = s.walkerID;
+
+-- without duplicates
+SELECT DISTINCT w.walkerID, w.name, w.phone
+FROM walker w, sponsor s
+WHERE w.walkerID = s.walkerID;
+
+
+-- #27-Display all walkers that have at least one sponsor (using keywords inner join)
+
+-- with duplicates
+SELECT w.walkerID, w.name, w.phone
+FROM walker w
+INNER JOIN sponsor s
+   ON w.walkerID = s.walkerID;
+
+-- without
+SELECT DISTINCT w.walkerID, w.name, w.phone
+FROM walker w
+INNER JOIN sponsor s
+   ON w.walkerID = s.walkerID;
+
+
+-- #28-What is the difference between a left and right join?
+--
+--  A left join B
+--  includes all rows from a with matching rows from B,
+--  if there are no matching rows in B a null value is shown
+--
+--  A right join B
+--  includes all rows from B with matching rows from A,
+--  if there are no matching rows in A, a null value is shown
+
+-- #29-Display all walkers that do not have at least one sponsor
+-- note: you must insert a walker without a sponsor to see results
+
+SELECT w.walkerID, w.name, w.phone
+FROM walker w
+LEFT JOIN sponsor s
+   ON w.walkerID = s.walkerID
+WHERE s.walkerID IS NULL;
+
+
+-- #30-How are full outer joins implemented in MySQL/MariaDB?
+-- It does not have an "outer join" option thus
+-- must use a UNION of a left and right join
+-- 
+
+SELECT w.walkerID, w.name, s.id, s.amount
+FROM walker w
+LEFT JOIN sponsor s ON w.walkerID = s.walkerID
+
+UNION
+
+SELECT w.walkerID, w.name, s.id, s.amount
+FROM walker w
+RIGHT JOIN sponsor s ON w.walkerID = s.walkerID;
+
+
+-- #31- Display a list of walkers and sponsors removing the duplicate names.
+SELECT name 
+FROM walker
+
+UNION
+
+SELECT name 
+FROM sponsor;
+
+-- note: UNION ALL keeps duplicates
+
 --- end ---
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
