@@ -17,4 +17,9 @@ CS 415 Huntington University
 5. [Assessement #1 Review Questions](sql/Assessment_1_Review.md)
 6. [Assessement #1 Review Solutions](sql/Assessment_1_Review_Solutions.md) 
 
+### Links to resources 
+[Transactions](https://mariadb.com/docs/server/reference/sql-statements/transactions/start-transaction)
+[Foreign Keys](ttps://mariadb.com/docs/server/ha-and-performance/optimization-and-tuning/optimization-and-indexes/foreign-keys)
+
+
 -- end --
