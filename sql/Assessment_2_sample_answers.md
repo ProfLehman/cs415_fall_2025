@@ -13,13 +13,30 @@ CREATE TABLE member (
   PRIMARY KEY (mid)
 ) ENGINE=InnoDB;
 
+INSERT INTO member (mid, name, state)
+VALUES 
+(10, 'Alice', 'IN'),
+(11, 'Bob', 'OH'),
+(12, 'Carol', 'MI'),
+(13, 'Dan', 'IN'),
+(14, 'Erin', 'CA');
+
+
 CREATE TABLE book (
   bid int(11) NOT NULL,
   title varchar(40) DEFAULT NULL,
   author varchar(20) DEFAULT NULL,
-  email char(2) DEFAULT NULL,
   PRIMARY KEY (`bid`)
 ) ENGINE=InnoDB;
+
+INSERT INTO book (bid, title, author)
+VALUES
+(1, 'Database Systems', 'Elmasri'),
+(2, 'Artificial Intelligence', 'Russell'),
+(3, 'Computer Networks', 'Tanenbaum'),
+(4, 'Introduction to Algorithms', 'Alice'),
+(5, 'Operating System Concepts', 'Silberschatz');
+
 
 CREATE TABLE checkout (
   cid int(11) NOT NULL,
@@ -28,6 +45,13 @@ CREATE TABLE checkout (
   mid int(11) DEFAULT NULL,
   PRIMARY KEY (cid)
 ) ENGINE=InnoDB;
+
+INSERT INTO checkout (cid, date, bid, mid)
+VALUES
+(201, '2025-10-05', 1, 10),
+(202, '2025-10-10', 3, 11),
+(203, '2025-10-12', 3, 12),
+(204, '2025-10-15', 5, 14);
 
 ```
 
