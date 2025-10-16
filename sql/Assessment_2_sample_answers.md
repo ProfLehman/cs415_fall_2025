@@ -1,11 +1,13 @@
 
-#Assessement #2 Sample Solutions
+#  Assessment #2 Sample Solutions
 CS415 Database Management
 Fall 2025
 
 ## SQL-04 Joins
 
 ```sql
+-- create sample tables and insert data
+
 CREATE TABLE member (
   mid int(11) NOT NULL,
   name varchar(20) DEFAULT NULL,
@@ -53,7 +55,91 @@ VALUES
 (203, '2025-10-12', 3, 12),
 (204, '2025-10-15', 5, 14);
 
+-- 1.
+-- How many rows would be returned by the following cross product?
+SELECT count(*) 
+FROM book, checkout, member;
+
+-- 5 x 4 x 5 = 100 rows
+
+
+-- 2. Complete the following to implement a cross product join of tables book and
+--    checkout displaying the title and checkout date for all books with checkouts.
+
+SELECT b.title, c.date
+FROM book b, checkout c
+WHERE b.bid = c.bid;
+
+
+-- 3.
+--  Complete the following using an Inner Join (ie. JOIN keyword) to display the same results as #2.
+
+SELECT b.title, c.date
+FROM book b JOIN checkout c
+ON b.bid = c.bid;
+
+-- can also specify INNER but "JOIN" and "INNER JOIN" are same
+SELECT b.title, c.date
+FROM book b INNER JOIN checkout c
+ON b.bid = c.bid;
+
+
+-- 4.
+-- Complete the following left join of tables member and checkout.
+
+SELECT m.name, c.date
+FROM member m LEFT JOIN checkout c
+ON m.mid = c.mid;
+
+
+-- 5.
+-- Show the results of checkout right join book. Display the mid and bid only. (hint: x6 rows)  Show the data returned, not the SQL
+
+| mid  | bid |
+|------|-----|
+| 10   | 1   |
+| 11   | 3   |
+| 12   | 3   |
+| 14   | 5   |
+| NULL | 2   |
+| NULL | 4   |
+
+
+-- 6.
+-- What is a full outer join?  In general (not exact SQL), how can a full outer join be accomplished with MariaDB? (2 or 3 sentences)
+
+A full outer join returns all rows from both tables. Matching rows are combined, and non-matching rows show NULL values for the missing side.
+MariaDB does not have a built-in FULL OUTER JOIN, but it can be simulated using a UNION of a LEFT JOIN and a RIGHT JOIN, for example:
+
+SELECT * FROM A LEFT JOIN B ON A.id = B.id
+UNION
+SELECT * FROM A RIGHT JOIN B ON A.id = B.id;
+
+
+-- 7.
+-- Complete the following to join all three tables to display the member name, checkout date, and book as shown.  You may use cross product or join approach.
+
+SELECT m.name, c.date, b.title
+FROM member m
+JOIN checkout c ON m.mid = c.mid
+JOIN book b ON c.bid = b.bid;
+
+-- or with cross product
+SELECT m.name, c.date, b.title
+FROM member m, checkout c, book b
+WHERE m.mid = c.mid
+AND c.bid = b.bid;
+
+
+-- 8.
+-- Show all member and author names without duplicates as shown. (one SQL statement)
+
+SELECT name FROM member
+UNION
+SELECT author AS name FROM book;
+
 ```
+
 
 ## SQL-06 Data Definition
 
