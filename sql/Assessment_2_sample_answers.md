@@ -93,7 +93,10 @@ insert into cd (title, available, aid) values
 --     plus 1 byte for each character
 -- if length is 256+ uses 2 bytes for length 
 --     plus 1 byte per character
-
+--
+-- Using char can help with search performance 
+-- depending on physical implementation as fixed length
+-- is easier to determine field location in file
 
 -- 3
 -- (1, “Oct”, “2025-10-09”, “IN”) 
@@ -173,36 +176,39 @@ select * from rips;
 ## SQL-05 Data Manipulation
 
 ```sql
--- 6  
+-- 1  
 insert into artist values ("a55", "Pink Martini");
 insert into artist (aid, name) values ("a55", "Pink Martini");
 --note "value" also  works
 
--- 7
+-- 2
 insert into artist (aid, name) values  ("a66", "Alex Pangman"), ("a77", "Norah Jones");
-insert into artist values "a66", "Alex Pangman"), ("a77", "Norah Jones");
+insert into artist values ("a66", "Alex Pangman"), ("a77", "Norah Jones");
 --note "value" also  works
 
+-- 3
+insert into artist (name)
+select name from new_artist;
 
--- 8
+-- 4
 update cd set available = "2021-08-15" where cid = 5;
 update cd set available = "2021-08-15" where title = "December";
 
--- 9
+-- 5
 update artist set name = "Rippingtons" where aid = "a44";
 
 
--- 10
+-- 6
 delete from cd where cid=4;
 delete from cd where title="Topaz";
 .
 
--- 11
+-- 7
 begin;
 delete from cd where cid = 4;
 rollback;
 
--- 12
+-- 8
 begin;
 delete from cd where cid = 4;
 commit;
@@ -211,25 +217,12 @@ begin transaction;
 delete from cd where cid = 4;
 commit;
 
+-- 9
+-- Concurrency problems arise when two or more users must access and change one or more tables.
+-- This can lead to corrupted data.
+-- Examples can include tickets (movies, concerts, airlines), hotel room bookings, any type of scheduling, with drawel of funds, etc...
 
-
-
---
--- Using char can help with search performance 
--- depending on physical implementation as fixed length
--- is easier to determine field location in file
-
-
-
-
-
-
-
-
-
-
-
--- 20
+-- 10
 -- ACID (Atomicity, Consistency, Isolation, Durability) 
 --
 -- Atomicity - A transaction is a logical unit of work that should be completely done or else not done at all
