@@ -1,7 +1,9 @@
-# CS415 Database Project – Fall 2025 - Draft
+# CS415 Database Project – Fall 2025
 
 **Due Date:** Tuesday, December 2, 2025 (first class after Thanksgiving break)
+
 **Presentations:** Final Exam period
+
 **Points:** 200 points (20% of your grade)
 
 ## Overview
@@ -93,9 +95,9 @@ Create a single SQL code block to delete your tables and data.
 
 ### Poster and Presentation (20 points)
 
-Create a poster describing your Database Project using the template provided.
+(15 points) Create a poster describing your Database Project using the template provided.
 
-Deliver a five-minute presentation during finals that describes your database design, demonstrates your SQL queries, 
+(5 points) Deliver a five-minute presentation during finals that describes your database design, demonstrates your SQL queries, 
 and describing any challenges you encountered and insights you gained from the project.
 
 ---
@@ -103,7 +105,7 @@ and describing any challenges you encountered and insights you gained from the p
 
 ## Final Notes
 * All SQL code blocks must work if executed in this order ie. create tables, insert data, queries, remove tables
-* **10% project grade deduction for script errors**. Test your code!
+* **10% project grade deduction for script errors**. Test your code! Have another student test your scripts.
 * The project represents **20% of your final grade**.
 * Start early, ask questions, and do your best!
 
