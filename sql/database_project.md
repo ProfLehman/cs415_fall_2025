@@ -46,7 +46,7 @@ All project code and documentation must be hosted on Github using Markdown for f
 
 ---
 
-### (20 points) – Create Tables
+### Create Tables (20 points)
 
 Create a single SQL code block to create your tables.
 
@@ -66,7 +66,7 @@ Create a single SQL code block to insert data.
 * One of your tables must have 100 rows or more of data.
 
 
-### Queries (80 points) –  Queries
+### Queries (60 points) –  Queries
 
 Create ten SQL code blocks that demonstrate the following queries. For each query, include a **2–3 sentence description** before 
 the SQL code block explaining its purpose and when/why it would be used.  Clear label each Query ie. Query 1, Query 2, etc...  
@@ -83,6 +83,17 @@ Show the results of your queries in table format.  Abbreviate the output for lar
 9. `DELETE` query.
 10. Create a `View` and demonstrate using this view.
 11. Create a `Transaction` with either `ROLLBACK` or `COMMIT` and demonstrate this transaction.
+
+
+### Reports (20 points) - Reports
+
+Connect to an external reporting tool (or export your data) and create two reports.
+
+1. Chart or Graph based report
+2. Table-based report with Report Title
+
+Use Excel, Access, PowerBI, or any other reporting tool.  Post your report and include a link to each report as a .pdf (or viewable image). 
+In one or two paragraphs describe the reporting software you used and the purpose of each report.
 
 
 ### Clean-Up (10 points) - Delete Tables
