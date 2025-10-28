@@ -15,7 +15,7 @@ Pick a **single table** from your final project to complete Parts 1 to 4.
 ### Part 1.  Backup Database
 Save a copy of your table create and insert statements using mysqldump in a file called lab1.sql
 
-### Part 2.  Comma-Delimited (CSV – comma separated values)
+### Part 2.  Comma-Delimited (CSV – comma-separated values)
 Save the table as a comma-delimited file called lab1.csv
 
 ### Part 3.  CSV to Excel
@@ -42,23 +42,27 @@ Upload zip file of the following four files.
     4. lab1.accdb
 
 
-
+```
+SQL
 -- import/export data notes
 -- note: text files can be copied/pasted from MariaDB back to Windows/Mac/Linux
 -- j.l. lehman
--- fall 2023
+-- fall 2025
 
 -- see MySQL command line options (from Linux/Windows command line) mysql -?   Or    mysql --help
 
--- create a table formatted file
+-- create a table-formatted file
 --  -e specifies execute
 --  add -N to remove column headings
--- without file redirect "> table.txt" the table is simply displayed mysql -t -e "select * from Artists" -u lehman -p lehman > table.txt
+-- without file redirect "> table.txt" the table is simply displayed
+mysql -t -e "select * from Artists" -u lehman -p lehman > table.txt
 
--- add line numbers to output by piping to cat utility with -n options mysql -t -e "select * from Artists" -u lehman -p lehman | cat -n
+-- add line numbers to output by piping to cat utility with -n options
+mysql -t -e "select * from Artists" -u lehman -p lehman | cat -n
 
 -- Create a tab-delimited file
--- note: tab's may not display correctly unless your redirect to the file or pipe to cat mysql -e "select * from Artists" -u lehman -p lehman > file.txt
+-- note: tab's may not display correctly unless your redirect to the file or pipe to cat
+mysql -e "select * from Artists" -u lehman -p lehman > file.txt
 
 -- Create a HTML file
 mysql -H -e "select * from Artists" -u lehman -p lehman > file.html
@@ -85,6 +89,12 @@ mysqldump lehman Artists -u lehman -p > backup.sql
 -- use '\n' only for files created in Linux or Mac
 -- ignore removes first line with column headings
 -- show warnings after import
--- often need to fix dates in Excel before exporting yyyy-mm-dd ie. 2019-11-17 load data local infile 'test.csv'
+-- often need to fix dates in Excel before exporting yyyy-mm-dd ie. 2019-11-17
+load data local infile 'test.csv'
 into table Artists
-fields terminated by "," optionally enclosed by '"' lines terminated by '\r\n' ignore 1 lines;
+fields terminated by ","
+optionally enclosed by '"'
+lines terminated by '\r\n'
+ignore 1 lines;
+```
+-- end --
