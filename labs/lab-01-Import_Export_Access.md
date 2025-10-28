@@ -41,6 +41,26 @@ Upload zip file of the following four files.
     3. lab1.xlsx
     4. lab1.accdb
 
+---
+
+### Sample Artist table
+
+```
+SQL
+
+CREATE TABLE `Artists` (
+  `ArtistID` int(11) NOT NULL,
+  `ArtistName` varchar(50) NOT NULL,
+  `City` varchar(25) DEFAULT NULL,
+  `Region` varchar(15) DEFAULT NULL,
+  `Country` varchar(20) DEFAULT NULL,
+  `WebAddress` varchar(40) DEFAULT NULL,
+  `EntryDate` date DEFAULT NULL,
+  `LeadSource` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `Artists` VALUES (1,'The Neurotics','Peterson','NC','USA','www.theneurotics.com','2003-05-14','Directmail'),(2,'Louis Holiday','Clinton','IL','USA',NULL,'2003-06-03','Directmail'),(3,'Word','Anderson','IN','USA',NULL,'2003-06-08','Email'),(5,'Sonata','Alexandria','VA','USA','www.classical.com/sonata','2003-06-08','Ad'),(10,'The Bullets','Alverez','TX','USA',NULL,'2003-08-10','Email'),(14,'Jose MacArthur','Santa Rosa','CA','USA','www.josemacarthur.com','2003-08-17','Ad'),(15,'Confused','Tybee Island','GA','USA',NULL,'2003-09-14','Directmail'),(17,'The Kicks','New Rochelle','NY','USA',NULL,'2003-12-03','Ad'),(16,'Today','London','ONT','Canada','www.today.com','2003-10-07','Email'),(18,'21 West Elm','Alamaba','VT','USA','www.21westelm.com','2003-02-05','Ad'),(11,'Highlander','Columbus','OH','USA',NULL,'2002-08-10','Email'),(99,'ELO','Huntington','IN','USA','NULL','2021-11-22','Ad'),(98,'The Foresters','Huntington','IN','USA','NULL','2021-11-22','Ad');
+```
 
 ```
 SQL
