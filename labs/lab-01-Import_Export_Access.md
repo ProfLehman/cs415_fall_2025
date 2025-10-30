@@ -4,9 +4,9 @@
 
 ---
 
-The purpose of this assignment is learn how import and export data with MariaDB.
+The purpose of this assignment is to learn how to import and export data with MariaDB.
 
-We will be using Microsoft Access (Windows Only) for this assignment. You can use Microsoft Access in the Computer Labs (S175/177).
+We will be using Microsoft Access (Windows only) for this assignment. You can use Microsoft Access in the Computer Labs (S175/177).
 
 See [office Portal](https://portal.office.com) to download Access on a Windows computer.
 
@@ -25,7 +25,7 @@ Import your file from Part 2 into Excel and save the file (in Excel format) as l
 
     1. Create an Access database called lab1.accdb
 
-    2. Create and save query to create your table in Access
+    2. Create and save a query to create your table in Access
 
     3. Copy and paste your data from the Excel Spreadsheet (Part 3) into your table
 
@@ -33,88 +33,200 @@ Import your file from Part 2 into Excel and save the file (in Excel format) as l
 
     5. Create and save two sample reports for your table
 
-
-
+#### Submitting your assignment
 Upload zip file of the following four files.
     1. lab1.sql
     2. lab1.csv
     3. lab1.xlsx
     4. lab1.accdb
 
+-- end assignment --
+
+
 ---
 
-### Sample Artist table
+## Import/Export Notes and Class Examples
 
-```
-SQL
+Text files can be copied/pasted from MariaDB back to Windows/Mac/Linux.  
+Note: See SQL below for sample `artists` table used in these examples.
 
-CREATE TABLE `Artists` (
-  `ArtistID` int(11) NOT NULL,
-  `ArtistName` varchar(50) NOT NULL,
-  `City` varchar(25) DEFAULT NULL,
-  `Region` varchar(15) DEFAULT NULL,
-  `Country` varchar(20) DEFAULT NULL,
-  `WebAddress` varchar(40) DEFAULT NULL,
-  `EntryDate` date DEFAULT NULL,
-  `LeadSource` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `Artists` VALUES (1,'The Neurotics','Peterson','NC','USA','www.theneurotics.com','2003-05-14','Directmail'),(2,'Louis Holiday','Clinton','IL','USA',NULL,'2003-06-03','Directmail'),(3,'Word','Anderson','IN','USA',NULL,'2003-06-08','Email'),(5,'Sonata','Alexandria','VA','USA','www.classical.com/sonata','2003-06-08','Ad'),(10,'The Bullets','Alverez','TX','USA',NULL,'2003-08-10','Email'),(14,'Jose MacArthur','Santa Rosa','CA','USA','www.josemacarthur.com','2003-08-17','Ad'),(15,'Confused','Tybee Island','GA','USA',NULL,'2003-09-14','Directmail'),(17,'The Kicks','New Rochelle','NY','USA',NULL,'2003-12-03','Ad'),(16,'Today','London','ONT','Canada','www.today.com','2003-10-07','Email'),(18,'21 West Elm','Alamaba','VT','USA','www.21westelm.com','2003-02-05','Ad'),(11,'Highlander','Columbus','OH','USA',NULL,'2002-08-10','Email'),(99,'ELO','Huntington','IN','USA','NULL','2021-11-22','Ad'),(98,'The Foresters','Huntington','IN','USA','NULL','2021-11-22','Ad');
+### mariaDB/mysql command line options (from Linux/Windows command line) 
+
+```SQL
+
+mariadb -?   
+mariadb --help
 ```
 
+### create a table-formatted file
+
+-t = table output  
+-e = execute  
+add -N to remove column headings  
+without file redirect "> table.txt" the table is simply displayed
+
+```sql
+mariadb -t -e "select * from artists" -u fisher -p fisher > table.txt
 ```
-SQL
--- import/export data notes
--- note: text files can be copied/pasted from MariaDB back to Windows/Mac/Linux
--- j.l. lehman
--- fall 2025
 
--- see MySQL command line options (from Linux/Windows command line) mysql -?   Or    mysql --help
+```BASH
 
--- create a table-formatted file
---  -e specifies execute
---  add -N to remove column headings
--- without file redirect "> table.txt" the table is simply displayed
-mysql -t -e "select * from Artists" -u lehman -p lehman > table.txt
+ls
+cat table.txt
 
--- add line numbers to output by piping to cat utility with -n options
-mysql -t -e "select * from Artists" -u lehman -p lehman | cat -n
++-----------+----------------+--------------+--------+---------+--------------------------+------------+-------------+
+| artist_id | artist_name    | city         | region | country | web_address              | entry_date | lead_source |
++-----------+----------------+--------------+--------+---------+--------------------------+------------+-------------+
+|         1 | The Neurotics  | Peterson     | NC     | USA     | www.theneurotics.com     | 2003-05-14 | Directmail  |
+|         2 | Louis Holiday  | Clinton      | IL     | USA     | NULL                     | 2003-06-03 | Directmail  |
+|         3 | Word           | Anderson     | IN     | USA     | NULL                     | 2003-06-08 | Email       |
+|         5 | Sonata         | Alexandria   | VA     | USA     | www.classical.com/sonata | 2003-06-08 | Ad          |
+|        10 | The Bullets    | Alverez      | TX     | USA     | NULL                     | 2003-08-10 | Email       |
+|        14 | Jose MacArthur | Santa Rosa   | CA     | USA     | www.josemacarthur.com    | 2003-08-17 | Ad          |
+|        15 | Confused       | Tybee Island | GA     | USA     | NULL                     | 2003-09-14 | Directmail  |
+|        17 | The Kicks      | New Rochelle | NY     | USA     | NULL                     | 2003-12-03 | Ad          |
+|        16 | Today          | London       | ONT    | Canada  | www.today.com            | 2003-10-07 | Email       |
+|        18 | 21 West Elm    | Alamaba      | VT     | USA     | www.21westelm.com        | 2003-02-05 | Ad          |
+|        11 | Highlander     | Columbus     | OH     | USA     | NULL                     | 2002-08-10 | Email       |
+|        99 | ELO            | Huntington   | IN     | USA     | NULL                     | 2021-11-22 | Ad          |
+|        98 | The Foresters  | Huntington   | IN     | USA     | NULL                     | 2021-11-22 | Ad          |
++-----------+----------------+--------------+--------+---------+--------------------------+------------+-------------+
+```
 
--- Create a tab-delimited file
--- note: tab's may not display correctly unless your redirect to the file or pipe to cat
-mysql -e "select * from Artists" -u lehman -p lehman > file.txt
 
--- Create a HTML file
-mysql -H -e "select * from Artists" -u lehman -p lehman > file.html
+### add line numbers to output
 
--- Create a XML file
-mysql -X -e "select * from Artists" -u lehman -p lehman > file.xml
+Use the `cat` utility with the `-n` option to display line numbers in the query output.
 
--- Create a CSV (Comma Separated Values)
--- tr translates \t to commas
-mysql -e "select * from Artists" -u lehman -p lehman | tr "\t" "," > file.csv
+```sql
+mariadb -t -e "select * from artists" -u fisher -p fisher | cat -n
+```
 
--- Backup Database with MySQLDump
--- mysqldump dbname tablename [tablename] -u username -p > file.sql
--- mysqldump --help
-mysqldump lehman Artists -u lehman -p > backup.sql
 
--- CSV to Excel
--- open .csv file in Spreadsheet and it should open/import with no issues, save in Excel format
+### create a tab-delimited file
 
--- Excel to CSV
--- create a comma delimited file Excel 2016(File, Export, Change File Type, Other File Types, Choose .CSV)
+Tabs may not display correctly unless redirected to a file or piped to `cat`.
 
--- Load CSV data into table (from within MySQL)
--- use '\n' only for files created in Linux or Mac
--- ignore removes first line with column headings
--- show warnings after import
--- often need to fix dates in Excel before exporting yyyy-mm-dd ie. 2019-11-17
+```sql
+mariadb -e "select * from artists" -u fisher -p fisher > file.txt
+```
+
+
+### create an HTML file
+
+Use the `-H` flag to output results as an HTML table.
+
+```sql
+mariadb -H -e "select * from artists" -u fisher -p fisher > file.html
+```
+
+
+### create an XML file
+
+Use the `-X` flag to output results in XML format.
+
+```sql
+mariadb -X -e "select * from artists" -u fisher -p fisher > file.xml
+```
+
+
+### create a CSV (comma-separated values) file
+
+Use `tr` to translate tabs into commas.
+
+```bash
+mariadb -e "select * from artists" -u fisher -p fisher | tr "\t" "," > file.csv
+```
+
+
+### backup database with `mysqldump`
+
+`mysqldump` creates a `.sql` script that can recreate the table and its data.
+
+```bash
+mysqldump fisher artists -u fisher -p > backup.sql
+```
+
+**Notes:**
+
+* Syntax: `mysqldump dbname tablename [tablename] -u username -p > file.sql`
+* Run `mysqldump --help` for more options.
+
+
+### csv to excel
+
+Open the `.csv` file in a spreadsheet application such as Excel. It should import cleanly.
+You can then **Save As → Excel Workbook (.xlsx)** if desired.
+
+---
+
+### excel to csv
+
+From Excel:
+**File → Export / Save As → Choose File Type → CSV (Comma delimited) (.csv)**
+
+
+### load csv data into table
+
+Import CSV data from within MariaDB/MySQL.
+Use `\n` for Linux/Mac line endings or `\r\n` for Windows.
+`ignore 1 lines` skips the header row.
+
+```sql
 load data local infile 'test.csv'
-into table Artists
-fields terminated by ","
+into table artists
+fields terminated by ','
 optionally enclosed by '"'
 lines terminated by '\r\n'
-ignore 1 lines;
+ignore 1 lines
+(artist_id, artist_name, city, region, country, web_address, entry_date, lead_source);
 ```
+
+**Alternative for Linux/Mac files:**
+
+```sql
+lines terminated by '\n'
+```
+
+---
+
+### create statement for sample artists table
+```
+sql
+
+CREATE TABLE artists (
+  artist_id int(11) NOT NULL,
+  artist_name varchar(50) NOT NULL,
+  city varchar(25) DEFAULT NULL,
+  region varchar(15) DEFAULT NULL,
+  country varchar(20) DEFAULT NULL,
+  web_address varchar(40) DEFAULT NULL,
+  entry_date date DEFAULT NULL,
+  lead_source varchar(10) DEFAULT NULL
+) ENGINE=InnoDB;
+
+```
+
+### insert for sample artists table
+```
+sql
+INSERT INTO artists (artist_id, artist_name, city, region, country, web_address, entry_date, lead_source)
+VALUES
+(1,'The Neurotics','Peterson','NC','USA','www.theneurotics.com','2003-05-14','Directmail'),
+(2,'Louis Holiday','Clinton','IL','USA',NULL,'2003-06-03','Directmail'),
+(3,'Word','Anderson','IN','USA',NULL,'2003-06-08','Email'),
+(5,'Sonata','Alexandria','VA','USA','www.classical.com/sonata','2003-06-08','Ad'),
+(10,'The Bullets','Alverez','TX','USA',NULL,'2003-08-10','Email'),
+(14,'Jose MacArthur','Santa Rosa','CA','USA','www.josemacarthur.com','2003-08-17','Ad'),
+(15,'Confused','Tybee Island','GA','USA',NULL,'2003-09-14','Directmail'),
+(17,'The Kicks','New Rochelle','NY','USA',NULL,'2003-12-03','Ad'),
+(16,'Today','London','ONT','Canada','www.today.com','2003-10-07','Email'),
+(18,'21 West Elm','Alamaba','VT','USA','www.21westelm.com','2003-02-05','Ad'),
+(11,'Highlander','Columbus','OH','USA',NULL,'2002-08-10','Email'),
+(99,'ELO','Huntington','IN','USA',NULL,'2021-11-22','Ad'),
+(98,'The Foresters','Huntington','IN','USA',NULL,'2021-11-22','Ad');
+
+```
+
 -- end --
