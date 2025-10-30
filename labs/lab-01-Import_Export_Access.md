@@ -70,28 +70,11 @@ without file redirect "> table.txt" the table is simply displayed
 mariadb -t -e "select * from artists" -u fisher -p fisher > table.txt
 ```
 
-```BASH
+Note: to see files created type `ls` to see files, then 'cat filename` to display file.
 
+```BASH
 ls
 cat table.txt
-
-+-----------+----------------+--------------+--------+---------+--------------------------+------------+-------------+
-| artist_id | artist_name    | city         | region | country | web_address              | entry_date | lead_source |
-+-----------+----------------+--------------+--------+---------+--------------------------+------------+-------------+
-|         1 | The Neurotics  | Peterson     | NC     | USA     | www.theneurotics.com     | 2003-05-14 | Directmail  |
-|         2 | Louis Holiday  | Clinton      | IL     | USA     | NULL                     | 2003-06-03 | Directmail  |
-|         3 | Word           | Anderson     | IN     | USA     | NULL                     | 2003-06-08 | Email       |
-|         5 | Sonata         | Alexandria   | VA     | USA     | www.classical.com/sonata | 2003-06-08 | Ad          |
-|        10 | The Bullets    | Alverez      | TX     | USA     | NULL                     | 2003-08-10 | Email       |
-|        14 | Jose MacArthur | Santa Rosa   | CA     | USA     | www.josemacarthur.com    | 2003-08-17 | Ad          |
-|        15 | Confused       | Tybee Island | GA     | USA     | NULL                     | 2003-09-14 | Directmail  |
-|        17 | The Kicks      | New Rochelle | NY     | USA     | NULL                     | 2003-12-03 | Ad          |
-|        16 | Today          | London       | ONT    | Canada  | www.today.com            | 2003-10-07 | Email       |
-|        18 | 21 West Elm    | Alamaba      | VT     | USA     | www.21westelm.com        | 2003-02-05 | Ad          |
-|        11 | Highlander     | Columbus     | OH     | USA     | NULL                     | 2002-08-10 | Email       |
-|        99 | ELO            | Huntington   | IN     | USA     | NULL                     | 2021-11-22 | Ad          |
-|        98 | The Foresters  | Huntington   | IN     | USA     | NULL                     | 2021-11-22 | Ad          |
-+-----------+----------------+--------------+--------+---------+--------------------------+------------+-------------+
 ```
 
 
@@ -154,6 +137,7 @@ mysqldump fisher artists -u fisher -p > backup.sql
 * Run `mysqldump --help` for more options.
 
 
+--- 
 ### csv to excel
 
 Open the `.csv` file in a spreadsheet application such as Excel. It should import cleanly.
@@ -167,11 +151,11 @@ From Excel:
 **File → Export / Save As → Choose File Type → CSV (Comma delimited) (.csv)**
 
 
-### load csv data into table
+### load csv data into table for Windows: terminated by \r\n
 
-Import CSV data from within MariaDB/MySQL.
-Use `\n` for Linux/Mac line endings or `\r\n` for Windows.
-`ignore 1 lines` skips the header row.
+Import CSV data from within MariaDB/MySQL.  
+Use `\n` for Linux/Mac line endings or `\r\n` for Windows.  
+`ignore 1 lines` skips the header row.  
 
 ```sql
 load data local infile 'test.csv'
@@ -183,10 +167,16 @@ ignore 1 lines
 (artist_id, artist_name, city, region, country, web_address, entry_date, lead_source);
 ```
 
-**Alternative for Linux/Mac files:**
+### Alternative for Linux/Mac files: terminated by \n
 
 ```sql
+load data local infile 'test.csv'
+into table artists
+fields terminated by ','
+optionally enclosed by '"'
 lines terminated by '\n'
+ignore 1 lines
+(artist_id, artist_name, city, region, country, web_address, entry_date, lead_source);
 ```
 
 ---
