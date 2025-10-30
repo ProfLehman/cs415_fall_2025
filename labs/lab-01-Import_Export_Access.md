@@ -23,18 +23,19 @@ Import your file from Part 2 into Excel and save the file (in Excel format) as l
 
 ### Part 4.  Microsoft Access
 
-    1. Create an Access database called lab1.accdb
+1. Create an **Access database** called `lab1.accdb`
 
-    2. Create and save a query to create your table in Access
+2. Create and save a **query to create your table** in Access
 
-    3. Copy and paste your data from the Excel Spreadsheet (Part 3) into your table
+3. Copy and **paste your data from the Excel Spreadsheet** (Part 3 of this assignment) into your table
 
-    4. Create and save two sample queries for your table
+4. Create and save **two sample queries** for your table
 
-    5. Create and save two sample reports for your table
+5. Create and save **two sample reports** for your table
 
 #### Submitting your assignment
-Upload zip file of the following four files.
+
+Upload a zip file called `lab1.zip` of the following four files.
     1. lab1.sql
     2. lab1.csv
     3. lab1.xlsx
@@ -51,7 +52,7 @@ Text files can be copied/pasted from MariaDB back to Windows/Mac/Linux.
 Note: See SQL below for sample `artists` table used in these examples.
 
 
-### mariaDB/mysql command line options (from Linux/Windows command line) 
+### MariaDB/Mysql command line options (from Linux/Windows command line) 
 
 ```SQL
 
@@ -59,7 +60,7 @@ mariadb -?
 mariadb --help
 ```
 
-### create a table-formatted file
+### Create an ASCII table-formatted file
 
 -t = table output  
 -e = execute  
@@ -78,7 +79,7 @@ cat table.txt
 ```
 
 
-### add line numbers to output
+### Add line numbers to output
 
 Use the `cat` utility with the `-n` option to display line numbers in the query output.
 
@@ -87,7 +88,7 @@ mariadb -t -e "select * from artists" -u fisher -p fisher | cat -n
 ```
 
 
-### create a tab-delimited file
+### Create a tab-delimited file
 
 Tabs may not display correctly unless redirected to a file or piped to `cat`.
 
@@ -96,7 +97,7 @@ mariadb -e "select * from artists" -u fisher -p fisher > file.txt
 ```
 
 
-### create an HTML file
+### Create an HTML file
 
 Use the `-H` flag to output results as an HTML table.
 
@@ -105,7 +106,7 @@ mariadb -H -e "select * from artists" -u fisher -p fisher > file.html
 ```
 
 
-### create an XML file
+### Create an XML file
 
 Use the `-X` flag to output results in XML format.
 
@@ -114,7 +115,7 @@ mariadb -X -e "select * from artists" -u fisher -p fisher > file.xml
 ```
 
 
-### create a CSV (comma-separated values) file
+### Create a CSV (comma-separated values) file
 
 Use `tr` to translate tabs into commas.
 
@@ -123,7 +124,7 @@ mariadb -e "select * from artists" -u fisher -p fisher | tr "\t" "," > file.csv
 ```
 
 
-### backup database with `mysqldump`
+### Backup database with `mysqldump`
 
 `mysqldump` creates a `.sql` script that can recreate the table and its data.
 
@@ -138,20 +139,20 @@ mysqldump fisher artists -u fisher -p > backup.sql
 
 
 --- 
-### csv to excel
+### CSV to Excel
 
 Open the `.csv` file in a spreadsheet application such as Excel. It should import cleanly.
 You can then **Save As → Excel Workbook (.xlsx)** if desired.
 
 ---
 
-### excel to csv
+### Excel to CSV
 
 From Excel:
 **File → Export / Save As → Choose File Type → CSV (Comma delimited) (.csv)**
 
 
-### load csv data into table for Windows: terminated by \r\n
+### Load CSV data into table for Windows: terminated by \r\n
 
 Import CSV data from within MariaDB/MySQL.  
 Use `\n` for Linux/Mac line endings or `\r\n` for Windows.  
@@ -167,7 +168,7 @@ ignore 1 lines
 (artist_id, artist_name, city, region, country, web_address, entry_date, lead_source);
 ```
 
-### Alternative for Linux/Mac files: terminated by \n
+### Load CSV data into table for Linux/Mac files: terminated by \n
 
 ```sql
 load data local infile 'test.csv'
@@ -179,9 +180,10 @@ ignore 1 lines
 (artist_id, artist_name, city, region, country, web_address, entry_date, lead_source);
 ```
 
+
 ---
 
-### create statement for sample artists table
+### Create statement for sample artists table
 ```
 sql
 
@@ -198,7 +200,7 @@ CREATE TABLE artists (
 
 ```
 
-### insert for sample artists table
+### Insert for sample artists table
 ```
 sql
 INSERT INTO artists (artist_id, artist_name, city, region, country, web_address, entry_date, lead_source)
@@ -219,4 +221,4 @@ VALUES
 
 ```
 
--- end --
+-- end notes --
