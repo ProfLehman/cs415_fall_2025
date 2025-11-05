@@ -1,7 +1,7 @@
-# 🧭 Microsoft Access Lab 4 – Quick Reference & Tutorial Links
+# 🧭 Microsoft Access – Quick Reference & Tutorial Links
 _For CS 415 Database Management Systems_
 
-This guide supports **Part 4: Microsoft Access** of your lab assignment.  
+This guide supports **Lab-01 - Part 4: Microsoft Access** of your lab assignment.  
 Follow these steps to create your database, import data, and build queries and reports.
 
 ---
@@ -70,14 +70,13 @@ If copy/paste causes data-type errors, use
 
 ## ✅ Submission Checklist
 - [x] `lab1.accdb` (database file)  
+- [x] Data successfully pasted from Excel  
 - [x] Two saved queries (`qry_…`)  
 - [x] Two saved reports (`rpt_…`)  
-- [x] Data successfully pasted from Excel  
-- [x] All files zipped for upload  
 
 ---
 
-> *AI Created for Huntington University CS 415 Database Management Systems – Fall 2025*  
+> *Mostly AI Created for Huntington University CS 415 Database Management Systems – Fall 2025*  
 > *Instructor: Dr. Jeff Lehman*
 ```
 
