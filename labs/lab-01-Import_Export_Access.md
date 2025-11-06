@@ -184,8 +184,7 @@ ignore 1 lines
 ---
 
 ### Create statement for sample artists table
-```
-sql
+```sql
 
 CREATE TABLE artists (
   artist_id int(11) NOT NULL,
