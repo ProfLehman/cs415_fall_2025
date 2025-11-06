@@ -200,8 +200,8 @@ CREATE TABLE artists (
 ```
 
 ### Insert for sample artists table
-```
-sql
+```sql
+
 INSERT INTO artists (artist_id, artist_name, city, region, country, web_address, entry_date, lead_source)
 VALUES
 (1,'The Neurotics','Peterson','NC','USA','www.theneurotics.com','2003-05-14','Directmail'),
