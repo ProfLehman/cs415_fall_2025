@@ -1,6 +1,6 @@
 # CS 415 Database Management Systems 
 ## Lab-01 – Import/Export - 40 Points
-## Recommended Due: 04 November 2025 (Final Due:  04 December 2025 at 5 pm.)
+## Recommended Due: 13 November 2025 (Final Due:  04 December 2025 at 5 pm.)
 
 ---
 
