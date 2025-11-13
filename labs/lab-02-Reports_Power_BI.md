@@ -1,5 +1,5 @@
 # CS 415 Database Management Systems
-## Lab-01 – Import/Export - 40 Points
+## Lab-02 – Reporting with PowerBI - 40 Points
 ## Recommended Due: 20 November 2025 (Final Due: 04 December 2025 at 5 pm.)
 
 
