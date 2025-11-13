@@ -192,3 +192,112 @@ A Bar/Column Chart OR Pie Chart appears
 Both visuals use your dataset
 
 Your report is saved successfully
+
+Task 3 – Add an Interactive Slicer (Filter)
+
+CS415 – Database Management Systems
+Power BI Web Version (app.powerbi.com)
+
+A Slicer is an interactive filter that lets users click or select values and dynamically update all visuals on the page.
+This helps demonstrate the difference between SQL (static results) and Power BI (interactive dashboards).
+
+## Step-by-Step Instructions
+1. Make sure your report is in Edit mode
+
+Go to app.powerbi.com
+
+Open My workspace → Reports
+
+Select your Power BI report
+
+Click Edit (top-right)
+
+2. Add a Slicer visual
+
+Click an empty area on the report canvas
+
+In the Visualizations pane, click the Slicer icon
+
+It looks like a funnel/filter symbol
+
+A blank slicer appears
+
+3. Choose a field for the slicer
+
+Select a field that makes sense to filter your data.
+Good examples:
+
+Category
+
+Type
+
+State
+
+Gender
+
+Department
+
+Rating
+
+Year (from a date field)
+
+Add it to the slicer:
+
+From the Fields pane, drag the column (e.g., Category or State)
+
+Drop it into the Field area of the slicer
+
+You should now see a list of values you can click.
+
+4. Change slicer style (recommended)
+
+By default, slicers display as lists.
+You can switch to a dropdown to save space:
+
+Select the slicer
+
+In the Visualizations pane, click the Format icon (slider controls)
+
+Expand Slicer settings
+
+Switch Style → Dropdown
+
+Now the slicer works like a menu.
+
+5. Test the slicer
+
+Click one or more values in the list/dropdown.
+
+Your Table updates
+
+Your Chart updates
+
+The entire report becomes an interactive dashboard
+
+Try selecting:
+
+A single category
+
+Multiple values
+
+“Clear selections” (eraser icon in the top-right of the slicer)
+
+## Task 3 Deliverable
+
+After completing this task, your report page should show:
+
+✔ A Slicer visual
+
+✔ Your Table filtering correctly
+
+✔ Your Chart filtering correctly
+
+Take a screenshot of your report showing the slicer in action.
+
+✔ Task 3 is complete when:
+
+The slicer changes what appears in both your table and your chart
+
+You understand how slicers create interactivity in Power BI
+
+Your report is saved successfully
