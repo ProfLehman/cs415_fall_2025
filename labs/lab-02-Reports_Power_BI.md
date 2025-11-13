@@ -21,6 +21,9 @@ You will complete three beginner‑level tasks:
 
 This lab focuses on learning the basics of **data uploading, visualizing, and filtering**.
 
+See [sample](https://app.powerbi.com/links/x7_TkkWwob?ctid=884d5ca5-5915-4c27-a610-a91a13d65264&pbi_source=linkShare&bookmarkGuid=79f31dd6-73c7-43eb-8b3e-ee65e33e7012)
+
+
 ---
 
 # # **Task 1 – Upload Your Own Data Table**
