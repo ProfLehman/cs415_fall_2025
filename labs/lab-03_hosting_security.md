@@ -1,6 +1,6 @@
 
 # CS 415 Database Management Systems  
-## Lab #9 – Hosting & Security (40 Points)  
+## Lab #3 – Hosting & Security (40 Points)  
 **Due:** 12/5/2023 at 11:55 pm
 
 ---
@@ -53,7 +53,7 @@ for the assignment.**
 
 
 
-# Part A — Database Level Privileges (5 points)
+# Part A — Database Level Privileges (8 points)
 
 ### 1. **As root** create admin and grant database-level privileges:
 
@@ -80,7 +80,7 @@ select * from db   where user='admin' and host='localhost'\G
 **Submit:**
 Full results of both queries.
 
-![Lab 09 – Hosting & Security](lab_9a.png)
+![Lab 03 – Part A](lab3_a.png)
 
 ---
 
