@@ -52,6 +52,7 @@ Students will submit the results of the required queries from parts B, C, D, and
 for the assignment.**
 
 
+---
 
 # Part A — Database Level Privileges (8 points)
 
@@ -117,9 +118,11 @@ select * from tables_priv where user='sales'\G
 **Submit:**
 Results of the `tables_priv` query.
 
+![Lab 03 – Part B](lab3_b.png)
+
 ---
 
-# Part C — Column Level Privileges (5 points)
+# Part C — Column Level Privileges (8 points)
 
 ### 1. Create artist user with column-level privileges:
 
@@ -157,9 +160,11 @@ select * from tables_priv   where user='artist' and host='localhost';
 **Submit:**
 Results of both queries.
 
+![Lab 03 – Part c](lab3_c.png)
+
 ---
 
-# Part D — Views (5 points)
+# Part D — Views (8 points)
 
 ### 1. Create view `cd`:
 
@@ -184,6 +189,9 @@ desc cd;
 select * from cd;
 ```
 
+![Lab 03 – Part D 1](lab3_d_1.png)
+
+
 ### 3. Show view definition:
 
 ```sql
@@ -194,9 +202,13 @@ select * from views where table_name='cd'\G
 **Submit:**
 Result of the `views` query.
 
+![Lab 03 – Part D 2](lab3_d_2.png)
+
+
+
 ---
 
-# Part E — Users (5 points)
+# Part E — Users (8 points)
 
 ### Show all users and password hashes:
 
@@ -205,29 +217,20 @@ use mysql;
 select user, host, password from user;
 ```
 
-You must show:
-
-* admin
-* sales
-* artist
-* each with passwords set
+![Lab 03 – Part E](lab3_e.png)
 
 ---
 
 ## What to Upload
 
-As text, Upload the SQL results for:
+As text, Upload to Moodle the SQL results for:
 
-* **Part B** (`tables_priv`)
-* **Part C** (`columns_priv`, `tables_priv`)
-* **Part D** (`views`)
-* **Part E** (`user` table)
+* **Part A** two selects from Part A. #3
+* **Part B** select from Part B. #2
+* **Part C** two selects from Part C. #3
+* **Part D** select from Part D. #3
+* **Part E** select from Part E.
 
 You may also be asked to demo your MariaDB installation in class with user accounts created for the assignment.
 
 -- end --
-
-
-
-Just let me know!
-```
