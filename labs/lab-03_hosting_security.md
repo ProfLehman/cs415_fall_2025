@@ -55,7 +55,7 @@ for the assignment.**
 
 # Part A — Database Level Privileges (5 points)
 
-### 1. Create admin and grant database-level privileges:
+### 1. **As root** create admin and grant database-level privileges:
 
 ```sql
 create user admin@localhost;
@@ -69,7 +69,7 @@ mysql -u admin -p
 set password = password('pw');
 ```
 
-### 3. As root, show admin's privileges:
+### 3. **As root**, show admin's privileges:
 
 ```sql
 use mysql;
@@ -79,6 +79,8 @@ select * from db   where user='admin' and host='localhost'\G
 
 **Submit:**
 Full results of both queries.
+
+![Lab 09 – Hosting & Security](lab_9a.PNG)
 
 ---
 
