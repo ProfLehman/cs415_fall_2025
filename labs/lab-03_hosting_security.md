@@ -80,7 +80,7 @@ select * from db   where user='admin' and host='localhost'\G
 **Submit:**
 Full results of both queries.
 
-![Lab 09 – Hosting & Security](lab_9a.PNG)
+![Lab 09 – Hosting & Security](lab_9a.png)
 
 ---
 
