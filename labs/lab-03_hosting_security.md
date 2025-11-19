@@ -17,8 +17,21 @@ You will use **MariaDB Community Edition** installed locally. You may use your l
 
 Commands should be run from the MariaDB command prompt.
 
-Download MariaDB:  
+Download and Install MariaDB on a computer of your choice:  
 https://mariadb.com/downloads/community/community-server/
+
+
+---
+
+***Mac Users***
+[Mac Install via Homebrew](https://mariadb.com/docs/server/server-management/install-and-upgrade-mariadb/installing-mariadb/binary-packages/installing-mariadb-on-macos-using-homebrew)  **Thanks Clay!**
+
+```
+brew install mariadb
+mysql.server start
+mysql
+```
+
 
 ---
 
