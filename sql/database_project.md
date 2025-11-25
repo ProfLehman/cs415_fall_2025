@@ -1,6 +1,6 @@
 # CS415 Database Project – Fall 2025
 
-**Due Date:** Monday, December 8th at 5:00 pm.
+**Due Date:** Monday, December 8th at 5:00 pm. (Extended from Tuesday 12/2)
 
 **Presentations:** Final Exam period
 
