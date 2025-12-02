@@ -82,9 +82,9 @@ The donation table records each individual donation made by a member to a projec
 
 ---
 
-### Create Tables (20 points)
+### Create Tables 
 
-The following SQL creates the `member`, `project`, and `donation` tables in the current database. Not that it does not create a database, only the tables.
+The following SQL creates the `member`, `project`, and `donation` tables in the current database. Note that it does not create a database, only the tables.
 
 ```sql
 
@@ -151,9 +151,9 @@ CREATE TABLE donation (
 
 ---
 
-### Insert Data (20 points)
+### Insert Data
 
-Sample data.
+The following SQL inserts sample data for the `member` (x20), `project` (x8), and `donation` (x100) tables in the current database.
 
 ```sql
 
