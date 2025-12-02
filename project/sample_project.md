@@ -421,7 +421,7 @@ FROM project;
 
 ## Query 3 – `SELECT` using a MariaDB function (non-aggregate)
 
-This query extracts the **email host/domain** for each member using `MID` and `INSTR`, similar to the examples you use in lab practice. It’s useful if you want to see where most emails are hosted (e.g., `hu.edu` vs `gmail.com`).
+This query extracts the **email host/domain** for each member using `MID` and `INSTR`. It’s useful if you want to see where most emails are hosted (e.g., `hu.edu` vs `gmail.com`).
 
 ```sql
 -- Query 3: Extract email host using MID and INSTR
@@ -490,17 +490,6 @@ ORDER BY total_amount DESC;
 
 This query joins `member`, `donation`, and `project` to show **who gave how much to which project and when**. It’s a common pattern for donation receipts, donor history pages, or detailed exports for analysis.
 
-**Sample Output (first few rows)**
-
-| did | first | last    | project_name          | amount | received   |
-| --- | ----- | ------- | --------------------- | ------ | ---------- |
-| 1   | Jeff  | Lehman  | HU Food Pantry        | 25.00  | 2025-02-01 |
-| 2   | Lisa  | Smith   | HU Food Pantry        | 50.00  | 2025-02-02 |
-| 3   | Mark  | Wenger  | HU Food Pantry        | 100.00 | 2025-02-03 |
-| 4   | Sarah | Johnson | Campus Creek Clean-Up | 20.00  | 2025-02-04 |
-| 5   | Caleb | Brown   | Campus Creek Clean-Up | 40.00  | 2025-02-05 |
-| ... | ...   | ...     | ...                   | ...    | ...        |
-
 ```sql
 -- Query 5: Join member, donation, and project to show detailed donation history
 SELECT
@@ -517,21 +506,40 @@ ORDER BY d.did
 LIMIT 20;
 ```
 
+**Sample Output (first x20)**
+```code
++-----+----------+---------+------------------------------+--------+------------+
+| did | first    | last    | project_name                 | amount | received   |
++-----+----------+---------+------------------------------+--------+------------+
+|   1 | Jeff     | Lehman  | HU Food Pantry               |  25.00 | 2025-02-01 |
+|   2 | Lisa     | Smith   | HU Food Pantry               |  50.00 | 2025-02-02 |
+|   3 | Mark     | Wenger  | HU Food Pantry               | 100.00 | 2025-02-03 |
+|   4 | Sarah    | Johnson | Campus Creek Clean-Up        |  20.00 | 2025-02-04 |
+|   5 | Caleb    | Brown   | Campus Creek Clean-Up        |  40.00 | 2025-02-05 |
+|   6 | Hannah   | Miller  | Community Garden             |  30.00 | 2025-02-06 |
+|   7 | David    | Peters  | Community Garden             |  75.00 | 2025-02-07 |
+|   8 | Maria    | Lopez   | Kids Coding Camp             | 150.00 | 2025-02-08 |
+|   9 | Ethan    | Garrett | Kids Coding Camp             |  25.00 | 2025-02-09 |
+|  10 | Olivia   | Turner  | Habitat Build Day            |  50.00 | 2025-02-10 |
+|  11 | Noah     | Baker   | Habitat Build Day            |  20.00 | 2025-02-11 |
+|  12 | Emma     | Clark   | Forester Scholarship Fund    | 200.00 | 2025-02-12 |
+|  13 | Jacob    | Foster  | Forester Scholarship Fund    |  25.00 | 2025-02-13 |
+|  14 | Ava      | Moore   | Youth Tutoring Nights        |  40.00 | 2025-02-14 |
+|  15 | Logan    | Hall    | Youth Tutoring Nights        |  75.00 | 2025-02-15 |
+|  16 | Mia      | Adams   | Community Christmas Outreach | 100.00 | 2025-02-16 |
+|  17 | James    | Wilson  | Community Christmas Outreach |  50.00 | 2025-02-17 |
+|  18 | Chloe    | Reed    | HU Food Pantry               |  20.00 | 2025-02-18 |
+|  19 | Benjamin | Ross    | HU Food Pantry               |  25.00 | 2025-02-19 |
+|  20 | Natalie  | Price   | Campus Creek Clean-Up        |  30.00 | 2025-02-20 |
++-----+----------+---------+------------------------------+--------+------------+
+20 rows in set (0.004 sec)
+```
+
 ---
 
 ## Query 6 – `LEFT JOIN` to include projects without donations
 
-This query uses a `LEFT JOIN` to list **all projects** and their total donations, including projects that currently have **no donations** (which will show `NULL` or `0` totals). This is useful when you want to see which projects are being ignored and might need extra promotion.
-
-**Sample Output (example)**
-
-| pid | name                  | total_amount |
-| --- | --------------------- | ------------ |
-| 1   | HU Food Pantry        | 800.00       |
-| 2   | Campus Creek Clean-Up | 620.00       |
-| 3   | Community Garden      | 700.00       |
-| 4   | Kids Coding Camp      | 650.00       |
-| ... | ...                   | ...          |
+This query uses a `LEFT JOIN` to list **all projects** and their total donations, including projects that currently have **no donations** (which will show `NULL` or `0` totals). This is useful when you want to identify which projects are being overlooked and may require additional promotion.
 
 ```sql
 -- Query 6: LEFT JOIN projects to donations to show all projects, even with no donations
@@ -545,23 +553,28 @@ GROUP BY p.pid, p.name
 ORDER BY p.pid;
 ```
 
+**Sample Output**
+```code
++-----+------------------------------+--------------+
+| pid | name                         | total_amount |
++-----+------------------------------+--------------+
+|   1 | HU Food Pantry               |       535.00 |
+|   2 | Campus Creek Clean-Up        |       735.00 |
+|   3 | Community Garden             |       425.00 |
+|   4 | Kids Coding Camp             |       945.00 |
+|   5 | Habitat Build Day            |       440.00 |
+|   6 | Forester Scholarship Fund    |      1045.00 |
+|   7 | Youth Tutoring Nights        |       450.00 |
+|   8 | Community Christmas Outreach |       910.00 |
++-----+------------------------------+--------------+
+8 rows in set (0.003 sec)
+```
+
 ---
 
 ## Query 7 – `UPDATE` query (change project status)
 
 This `UPDATE` marks the “Campus Creek Clean-Up” project as **Active** (`status = 'A'`). This is the kind of change staff would make when a project moves from planning to active fundraising. The `SELECT` before and after helps you verify the update worked.
-
-**Before UPDATE (excerpt)**
-
-| pid | name                  | status |
-| --- | --------------------- | ------ |
-| 2   | Campus Creek Clean-Up | P      |
-
-**After UPDATE (excerpt)**
-
-| pid | name                  | status |
-| --- | --------------------- | ------ |
-| 2   | Campus Creek Clean-Up | A      |
 
 ```sql
 -- Query 7: UPDATE a project’s status from Planned ('P') to Active ('A')
@@ -582,23 +595,27 @@ FROM project
 WHERE pid = 2;
 ```
 
+**Sample Output**
+```code
++-----+-----------------------+--------+
+| pid | name                  | status |
++-----+-----------------------+--------+
+|   2 | Campus Creek Clean-Up | P      |
++-----+-----------------------+--------+
+
++-----+-----------------------+--------+
+| pid | name                  | status |
++-----+-----------------------+--------+
+|   2 | Campus Creek Clean-Up | A      |
++-----+-----------------------+--------+
+```
+
 ---
 
 ## Query 8 – `DELETE` query (remove a specific donation)
 
 This query deletes a **single donation record** (for example, if it was entered by mistake). We first show the row we’re about to delete, run the `DELETE`, and then show that it has been removed. Because of the foreign key constraints, we’re deleting from `donation` only (not `member` or `project`).
 
-**Before DELETE (excerpt)**
-
-| did | mid | pid | amount | received   |
-| --- | --- | --- | ------ | ---------- |
-| 100 | 20  | 2   | 60.00  | 2025-05-11 |
-
-**After DELETE (excerpt)**
-
-| did         | mid | pid | amount | received |
-| ----------- | --- | --- | ------ | -------- |
-| *(no rows)* |     |     |        |          |
 
 ```sql
 -- Query 8: DELETE a single donation (e.g., did = 100)
@@ -618,20 +635,27 @@ FROM donation
 WHERE did = 100;
 ```
 
+**Sample Output**
+```code
++-----+-----+-----+--------+------------+
+| did | mid | pid | amount | received   |
++-----+-----+-----+--------+------------+
+| 100 |  20 |   2 |  60.00 | 2025-05-11 |
++-----+-----+-----+--------+------------+
+1 row in set (0.000 sec)
+
+SELECT did, mid, pid, amount, received
+    -> FROM donation
+    -> WHERE did = 100;
+
+Empty set (0.001 sec)
+```
+
 ---
 
 ## Query 9 – Create a `VIEW` and use it
 
 This query creates a view called `donation_details` that joins member names and project names with each donation. Views like this simplify complex joins and make it easier to reuse the same “logical table” in reports or applications.
-
-**Sample Output from the VIEW (excerpt)**
-
-| did | first | last   | project_name   | amount | received   |
-| --- | ----- | ------ | -------------- | ------ | ---------- |
-| 1   | Jeff  | Lehman | HU Food Pantry | 25.00  | 2025-02-01 |
-| 2   | Lisa  | Smith  | HU Food Pantry | 50.00  | 2025-02-02 |
-| 3   | Mark  | Wenger | HU Food Pantry | 100.00 | 2025-02-03 |
-| ... | ...   | ...    | ...            | ...    | ...        |
 
 ```sql
 -- Query 9: Create a VIEW and then select from it
@@ -652,33 +676,33 @@ JOIN project p ON d.pid = p.pid;
 -- Use the view
 SELECT *
 FROM donation_details
-ORDER BY did
-LIMIT 10;
+ORDER BY did;
 ```
 
+**Sample Output**
+```code
++-----+--------+---------+-----------------------+--------+------------+
+| did | first  | last    | project_name          | amount | received   |
++-----+--------+---------+-----------------------+--------+------------+
+|   1 | Jeff   | Lehman  | HU Food Pantry        |  25.00 | 2025-02-01 |
+|   2 | Lisa   | Smith   | HU Food Pantry        |  50.00 | 2025-02-02 |
+|   3 | Mark   | Wenger  | HU Food Pantry        | 100.00 | 2025-02-03 |
+|   4 | Sarah  | Johnson | Campus Creek Clean-Up |  20.00 | 2025-02-04 |
+|   5 | Caleb  | Brown   | Campus Creek Clean-Up |  40.00 | 2025-02-05 |
+...
+|   6 | Hannah | Miller  | Community Garden      |  30.00 | 2025-02-06 |
+|   7 | David  | Peters  | Community Garden      |  75.00 | 2025-02-07 |
+|   8 | Maria  | Lopez   | Kids Coding Camp      | 150.00 | 2025-02-08 |
+|   9 | Ethan  | Garrett | Kids Coding Camp      |  25.00 | 2025-02-09 |
+|  10 | Olivia | Turner  | Habitat Build Day     |  50.00 | 2025-02-10 |
++-----+--------+---------+-----------------------+--------+------------+
+99 rows in set (0.012 sec)
+```
 ---
 
 ## Query 10 – Transaction with `ROLLBACK`
 
 This example shows a transaction where we **temporarily increase** the goal for “HU Food Pantry” by $500, check the result, and then `ROLLBACK` so the change does not stick. This pattern is useful when testing changes or when multiple updates must either all succeed or all be undone.
-
-**Before Transaction (excerpt)**
-
-| pid | name           | goal    |
-| --- | -------------- | ------- |
-| 1   | HU Food Pantry | 5000.00 |
-
-**Inside Transaction (after UPDATE, before ROLLBACK)**
-
-| pid | name           | goal    |
-| --- | -------------- | ------- |
-| 1   | HU Food Pantry | 5500.00 |
-
-**After ROLLBACK (back to original)**
-
-| pid | name           | goal    |
-| --- | -------------- | ------- |
-| 1   | HU Food Pantry | 5000.00 |
 
 ```sql
 -- Query 10: Demonstrate a transaction with ROLLBACK
@@ -711,8 +735,62 @@ WHERE pid = 1;
 
 ---
 
-If you’d like, I can bundle these into a **`prj3_queries.sql`** file with comments and section headers so students can download and run it directly.
+**Sample Output**
+```code
+MariaDB [test]> -- Query 10: Demonstrate a transaction with ROLLBACK
+MariaDB [test]>
+MariaDB [test]> -- Check original goal
+MariaDB [test]> SELECT pid, name, goal
+    -> FROM project
+    -> WHERE pid = 1;
++-----+----------------+---------+
+| pid | name           | goal    |
++-----+----------------+---------+
+|   1 | HU Food Pantry | 5000.00 |
++-----+----------------+---------+
+1 row in set (0.000 sec)
 
+MariaDB [test]>
+MariaDB [test]> START TRANSACTION;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [test]>
+MariaDB [test]> -- Temporarily increase the goal by $500
+MariaDB [test]> UPDATE project
+    -> SET goal = goal + 500
+    -> WHERE pid = 1;
+Query OK, 1 row affected (0.001 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [test]>
+MariaDB [test]> -- See the changed value inside the transaction
+MariaDB [test]> SELECT pid, name, goal
+    -> FROM project
+    -> WHERE pid = 1;
++-----+----------------+---------+
+| pid | name           | goal    |
++-----+----------------+---------+
+|   1 | HU Food Pantry | 5500.00 |
++-----+----------------+---------+
+1 row in set (0.000 sec)
+
+MariaDB [test]>
+MariaDB [test]> -- Decide to undo the change
+MariaDB [test]> ROLLBACK;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [test]>
+MariaDB [test]> -- Confirm the goal is back to the original value
+MariaDB [test]> SELECT pid, name, goal
+    -> FROM project
+    -> WHERE pid = 1;
++-----+----------------+---------+
+| pid | name           | goal    |
++-----+----------------+---------+
+|   1 | HU Food Pantry | 5000.00 |
++-----+----------------+---------+
+1 row in set (0.000 sec)
+```
 
 ---
 
