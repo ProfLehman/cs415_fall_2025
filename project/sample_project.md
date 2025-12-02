@@ -343,8 +343,6 @@ Required Queries using `member`, `project`, and `donation` tables.
 
 This query lists members ordered first by `city` (A–Z) and then by `last` name (A–Z) within each city. It’s useful when generating printed or emailed lists grouped by city but still nicely sorted by name.
 
-**Sample Output (abbreviated)**
-
 ```sql
 -- Query 1: List members ordered by city, then last name
 SELECT
@@ -357,21 +355,40 @@ FROM member
 ORDER BY city ASC, last ASC;
 ```
 
+**Sample Output**
+```code
++-----+----------+---------+------------------+-------+
+| mid | first    | last    | city             | state |
++-----+----------+---------+------------------+-------+
+|   9 | Ethan    | Garrett | Andrews          | IN    |
+|  15 | Logan    | Hall    | Bluffton         | IN    |
+|   4 | Sarah    | Johnson | Fort Wayne       | IN    |
+|  18 | Chloe    | Reed    | Fort Wayne       | IN    |
+|  10 | Olivia   | Turner  | Fort Wayne       | IN    |
+|  16 | Mia      | Adams   | Huntington       | IN    |
+|  11 | Noah     | Baker   | Huntington       | IN    |
+|  13 | Jacob    | Foster  | Huntington       | IN    |
+|   1 | Jeff     | Lehman  | Huntington       | IN    |
+|   8 | Maria    | Lopez   | Huntington       | IN    |
+|   6 | Hannah   | Miller  | Huntington       | IN    |
+|  14 | Ava      | Moore   | Huntington       | IN    |
+|  19 | Benjamin | Ross    | Huntington       | IN    |
+|   2 | Lisa     | Smith   | Huntington       | IN    |
+|   3 | Mark     | Wenger  | Huntington       | IN    |
+|  17 | James    | Wilson  | Huntington       | IN    |
+|  20 | Natalie  | Price   | North Manchester | IN    |
+|   5 | Caleb    | Brown   | Roanoke          | IN    |
+|  12 | Emma     | Clark   | Roanoke          | IN    |
+|   7 | David    | Peters  | Warren           | IN    |
++-----+----------+---------+------------------+-------+
+20 rows in set (0.005 sec)
+```
+
 ---
 
 ## Query 2 – `SELECT` with a calculated field (non-aggregate)
 
 This query shows each project’s goal in dollars and also as “thousands of dollars” using a calculated field (`goal / 1000`). This is handy when displaying project goals in a more compact format on dashboards or summary reports.
-
-**Sample Output**
-
-| pid | name                  | goal   | goal_thousands |
-| --- | --------------------- | ------ | -------------- |
-| 1   | HU Food Pantry        | 5000.0 | 5.0            |
-| 2   | Campus Creek Clean-Up | 1500.0 | 1.5            |
-| 3   | Community Garden      | 2500.0 | 2.5            |
-| 4   | Kids Coding Camp      | 3000.0 | 3.0            |
-| ... | ...                   | ...    | ...            |
 
 ```sql
 -- Query 2: Show project goals, including a calculated “thousands” column
@@ -383,22 +400,28 @@ SELECT
 FROM project;
 ```
 
+**Sample Output**
+```code
++-----+------------------------------+---------+----------------+
+| pid | name                         | goal    | goal_thousands |
++-----+------------------------------+---------+----------------+
+|   1 | HU Food Pantry               | 5000.00 |       5.000000 |
+|   2 | Campus Creek Clean-Up        | 1500.00 |       1.500000 |
+|   3 | Community Garden             | 2500.00 |       2.500000 |
+|   4 | Kids Coding Camp             | 3000.00 |       3.000000 |
+|   5 | Habitat Build Day            | 4000.00 |       4.000000 |
+|   6 | Forester Scholarship Fund    | 8000.00 |       8.000000 |
+|   7 | Youth Tutoring Nights        | 2000.00 |       2.000000 |
+|   8 | Community Christmas Outreach | 6000.00 |       6.000000 |
++-----+------------------------------+---------+----------------+
+8 rows in set (0.006 sec)
+```
+
 ---
 
 ## Query 3 – `SELECT` using a MariaDB function (non-aggregate)
 
 This query extracts the **email host/domain** for each member using `MID` and `INSTR`, similar to the examples you use in lab practice. It’s useful if you want to see where most emails are hosted (e.g., `hu.edu` vs `gmail.com`).
-
-**Sample Output**
-
-| mid | email                                                         | host        |
-| --- | ------------------------------------------------------------- | ----------- |
-| 1   | [jeff.lehman@hu.edu](mailto:jeff.lehman@hu.edu)               | hu.edu      |
-| 2   | [lisa.smith@example.com](mailto:lisa.smith@example.com)       | example.com |
-| 3   | [mark.wenger@example.com](mailto:mark.wenger@example.com)     | example.com |
-| 4   | [sarah.johnson@example.com](mailto:sarah.johnson@example.com) | example.com |
-| 5   | [caleb.brown@example.com](mailto:caleb.brown@example.com)     | example.com |
-| ... | ...                                                           | ...         |
 
 ```sql
 -- Query 3: Extract email host using MID and INSTR
@@ -411,24 +434,30 @@ ORDER BY mid
 LIMIT 10;
 ```
 
+**Sample Output**
+```code
++-----+---------------------------+-------------+
+| mid | email                     | host        |
++-----+---------------------------+-------------+
+|   1 | jeff.lehman@hu.edu        | hu.edu      |
+|   2 | lisa.smith@example.com    | example.com |
+|   3 | mark.wenger@example.com   | example.com |
+|   4 | sarah.johnson@example.com | example.com |
+|   5 | caleb.brown@example.com   | example.com |
+|   6 | hannah.miller@example.com | example.com |
+|   7 | david.peters@example.com  | example.com |
+|   8 | maria.lopez@example.com   | example.com |
+|   9 | ethan.garrett@example.com | example.com |
+|  10 | olivia.turner@example.com | example.com |
++-----+---------------------------+-------------+
+10 rows in set (0.011 sec)
+```
+
 ---
 
 ## Query 4 – Aggregation with `GROUP BY` and `HAVING`
 
 This query calculates the **total amount donated to each project** and then filters to show only projects that have received at least $500. It’s a typical reporting query to identify which projects are attracting significant financial support.
-
-> Exact totals will depend on your actual data; numbers below are illustrative.
-
-**Sample Output (example)**
-
-| pid | name                         | total_amount |
-| --- | ---------------------------- | ------------ |
-| 1   | HU Food Pantry               | 800.00       |
-| 3   | Community Garden             | 720.00       |
-| 6   | Forester Scholarship Fund    | 950.00       |
-| 8   | Community Christmas Outreach | 670.00       |
-| ... | ...                          | ...          |
-
 ```sql
 -- Query 4: Total donations per project, only showing projects with >= $500
 SELECT
@@ -442,6 +471,19 @@ HAVING SUM(d.amount) >= 500
 ORDER BY total_amount DESC;
 ```
 
+**Sample Output (example)**
+```code
++-----+------------------------------+--------------+
+| pid | name                         | total_amount |
++-----+------------------------------+--------------+
+|   6 | Forester Scholarship Fund    |      1045.00 |
+|   4 | Kids Coding Camp             |       945.00 |
+|   8 | Community Christmas Outreach |       910.00 |
+|   2 | Campus Creek Clean-Up        |       735.00 |
+|   1 | HU Food Pantry               |       535.00 |
++-----+------------------------------+--------------+
+5 rows in set (0.014 sec)
+```
 ---
 
 ## Query 5 – Join of three tables (`member`, `donation`, `project`)
