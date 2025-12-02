@@ -15,6 +15,37 @@
 * 2 or 3 paragraphs describing the overall design for your database, including any issues or design choices you made as part of the normalization process.
 * 2 or 3 sentences each describing the purpose of each table in your database.
 
+```mermaid
+erDiagram
+    STUDENT {
+        VARCHAR(2) sid PK
+        VARCHAR(45) name
+    }
+
+    CAMERA_TYPE {
+        VARCHAR(45) model PK
+        VARCHAR(45) type
+    }
+
+    CAMERA {
+        CHAR(1) cid PK
+        VARCHAR(45) model FK
+    }
+
+    LOAN {
+        INT lid PK
+        DATE out
+        TINYINT returned
+        VARCHAR(2) sid FK
+        CHAR(1) cid FK
+        INT days
+    }
+
+    STUDENT ||--o{ LOAN : "has loans"
+    CAMERA  ||--o{ LOAN : "is loaned"
+    CAMERA_TYPE ||--o{ CAMERA : "classifies"
+```
+
 ---
 
 ### Create Tables (20 points)
@@ -155,15 +186,24 @@ the SQL code block explaining its purpose and when/why it would be used.  Clear 
 Show the results of your queries in table format.  Abbreviate the output for large results.
 
 1. `SELECT` using **ORDER BY** two or more columns.
-   
+
+   Show all students sorted by their last name ...
 ```sql
--- #1 
--- show all students sorted by their last name.  
+
 select * from student order by name desc;
+
 ```
 
 2. `SELECT` using a **calculated field** with a meaningful column heading.
    * Example: `lengthseconds / 60 AS minutes` (not an aggregation).
+  
+   Show loan length as hours ...
+         
+```sql
+
+select * from days * 24 as hours from loan;
+
+```
   
 3. 
 4. `SELECT` using a **MariaDB function** (e.g., `MID`, `MONTH`, `DATE`) (not an aggregation).
