@@ -794,7 +794,7 @@ MariaDB [test]> SELECT pid, name, goal
 
 ---
 
-### Reports (20 points) 
+### Reports
 
 Connect to an external reporting tool (or export your data) and create two reports.
 
@@ -806,28 +806,27 @@ In one or two paragraphs, describe the reporting software you used and the purpo
 
 ---
 
-### Delete Tables (10 points)
+### Delete Tables
 
-Create a single SQL code block to delete your tables and data.
+Drop all tables (and view) from database.
 
-* Script to delete **all data, tables, and views**.
 
 ```sql
+-- ==========================================
+--  DROP ALL TABLES FOR FORESTERS GIVE
+--  (Donation → Member/Project dependency)
+-- ==========================================
 
--- prj4.sql
--- j.l.lehman
--- sample drop table statements for CS415 database project
--- deletes database tables from exam #3
+-- Drop the view first (if it exists)
+DROP VIEW IF EXISTS donation_details;
 
--- note: must delete tables with foreign keys first
---       to ensure referential integrity
+-- Drop child table first (FK references member, project)
+DROP TABLE IF EXISTS donation;
 
--- drop tables
-drop table loan;
-drop table camera;
-drop table camera_type;
-drop table student;
----
+-- Then drop parent tables
+DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS project;
+
 ```
 
 ---
