@@ -335,40 +335,342 @@ INSERT INTO donation (did, mid, pid, amount, received, method, note) VALUES
 
 ### Queries (60 points)
 
-Create ten SQL code blocks that demonstrate the following queries. For each query, include a **2–3 sentence description** before 
-the SQL code block explaining its purpose and when/why it would be used.  Clear label each Query ie. Query 1, Query 2, etc...  
-Show the results of your queries in table format.  Abbreviate the output for large results.
+Required Queries using `member`, `project`, and `donation` tables.
 
-1. `SELECT` using **ORDER BY** two or more columns.
+---
 
-   Show all students sorted by their last name ...
+## Query 1 – `SELECT` with `ORDER BY` on two columns
+
+This query lists members ordered first by `city` (A–Z) and then by `last` name (A–Z) within each city. It’s useful when generating printed or emailed lists grouped by city but still nicely sorted by name.
+
+**Sample Output (abbreviated)**
+
 ```sql
-
-select * from student order by name desc;
-
+-- Query 1: List members ordered by city, then last name
+SELECT
+    mid,
+    first,
+    last,
+    city,
+    state
+FROM member
+ORDER BY city ASC, last ASC;
 ```
 
-2. `SELECT` using a **calculated field** with a meaningful column heading.
-   * Example: `lengthseconds / 60 AS minutes` (not an aggregation).
-  
-   Show loan length as hours ...
-         
+---
+
+## Query 2 – `SELECT` with a calculated field (non-aggregate)
+
+This query shows each project’s goal in dollars and also as “thousands of dollars” using a calculated field (`goal / 1000`). This is handy when displaying project goals in a more compact format on dashboards or summary reports.
+
+**Sample Output**
+
+| pid | name                  | goal   | goal_thousands |
+| --- | --------------------- | ------ | -------------- |
+| 1   | HU Food Pantry        | 5000.0 | 5.0            |
+| 2   | Campus Creek Clean-Up | 1500.0 | 1.5            |
+| 3   | Community Garden      | 2500.0 | 2.5            |
+| 4   | Kids Coding Camp      | 3000.0 | 3.0            |
+| ... | ...                   | ...    | ...            |
+
 ```sql
-
-select * from days * 24 as hours from loan;
-
+-- Query 2: Show project goals, including a calculated “thousands” column
+SELECT
+    pid,
+    name,
+    goal,
+    goal / 1000 AS goal_thousands
+FROM project;
 ```
-  
-3. 
-4. `SELECT` using a **MariaDB function** (e.g., `MID`, `MONTH`, `DATE`) (not an aggregation).
-5. `SELECT` with an **aggregation** (`COUNT`, `SUM`, `MIN`, `AVG`) plus `GROUP BY` and `HAVING`.
-6. `Join` of **three or more tables** (INNER JOIN or cross-product).
-7. Left or Right `JOIN` (left, or right join).
 
-8. 9. `UPDATE` query.
-10. `DELETE` query.
-11. Create a `View` and demonstrate using this view.
-12. Create a `Transaction` with either `ROLLBACK` or `COMMIT` and demonstrate this transaction.
+---
+
+## Query 3 – `SELECT` using a MariaDB function (non-aggregate)
+
+This query extracts the **email host/domain** for each member using `MID` and `INSTR`, similar to the examples you use in lab practice. It’s useful if you want to see where most emails are hosted (e.g., `hu.edu` vs `gmail.com`).
+
+**Sample Output**
+
+| mid | email                                                         | host        |
+| --- | ------------------------------------------------------------- | ----------- |
+| 1   | [jeff.lehman@hu.edu](mailto:jeff.lehman@hu.edu)               | hu.edu      |
+| 2   | [lisa.smith@example.com](mailto:lisa.smith@example.com)       | example.com |
+| 3   | [mark.wenger@example.com](mailto:mark.wenger@example.com)     | example.com |
+| 4   | [sarah.johnson@example.com](mailto:sarah.johnson@example.com) | example.com |
+| 5   | [caleb.brown@example.com](mailto:caleb.brown@example.com)     | example.com |
+| ... | ...                                                           | ...         |
+
+```sql
+-- Query 3: Extract email host using MID and INSTR
+SELECT
+    mid,
+    email,
+    MID(email, INSTR(email, '@') + 1, 200) AS host
+FROM member
+ORDER BY mid
+LIMIT 10;
+```
+
+---
+
+## Query 4 – Aggregation with `GROUP BY` and `HAVING`
+
+This query calculates the **total amount donated to each project** and then filters to show only projects that have received at least $500. It’s a typical reporting query to identify which projects are attracting significant financial support.
+
+> Exact totals will depend on your actual data; numbers below are illustrative.
+
+**Sample Output (example)**
+
+| pid | name                         | total_amount |
+| --- | ---------------------------- | ------------ |
+| 1   | HU Food Pantry               | 800.00       |
+| 3   | Community Garden             | 720.00       |
+| 6   | Forester Scholarship Fund    | 950.00       |
+| 8   | Community Christmas Outreach | 670.00       |
+| ... | ...                          | ...          |
+
+```sql
+-- Query 4: Total donations per project, only showing projects with >= $500
+SELECT
+    p.pid,
+    p.name,
+    SUM(d.amount) AS total_amount
+FROM project p
+JOIN donation d ON p.pid = d.pid
+GROUP BY p.pid, p.name
+HAVING SUM(d.amount) >= 500
+ORDER BY total_amount DESC;
+```
+
+---
+
+## Query 5 – Join of three tables (`member`, `donation`, `project`)
+
+This query joins `member`, `donation`, and `project` to show **who gave how much to which project and when**. It’s a common pattern for donation receipts, donor history pages, or detailed exports for analysis.
+
+**Sample Output (first few rows)**
+
+| did | first | last    | project_name          | amount | received   |
+| --- | ----- | ------- | --------------------- | ------ | ---------- |
+| 1   | Jeff  | Lehman  | HU Food Pantry        | 25.00  | 2025-02-01 |
+| 2   | Lisa  | Smith   | HU Food Pantry        | 50.00  | 2025-02-02 |
+| 3   | Mark  | Wenger  | HU Food Pantry        | 100.00 | 2025-02-03 |
+| 4   | Sarah | Johnson | Campus Creek Clean-Up | 20.00  | 2025-02-04 |
+| 5   | Caleb | Brown   | Campus Creek Clean-Up | 40.00  | 2025-02-05 |
+| ... | ...   | ...     | ...                   | ...    | ...        |
+
+```sql
+-- Query 5: Join member, donation, and project to show detailed donation history
+SELECT
+    d.did,
+    m.first,
+    m.last,
+    p.name AS project_name,
+    d.amount,
+    d.received
+FROM donation d
+JOIN member  m ON d.mid = m.mid
+JOIN project p ON d.pid = p.pid
+ORDER BY d.did
+LIMIT 20;
+```
+
+---
+
+## Query 6 – `LEFT JOIN` to include projects without donations
+
+This query uses a `LEFT JOIN` to list **all projects** and their total donations, including projects that currently have **no donations** (which will show `NULL` or `0` totals). This is useful when you want to see which projects are being ignored and might need extra promotion.
+
+**Sample Output (example)**
+
+| pid | name                  | total_amount |
+| --- | --------------------- | ------------ |
+| 1   | HU Food Pantry        | 800.00       |
+| 2   | Campus Creek Clean-Up | 620.00       |
+| 3   | Community Garden      | 700.00       |
+| 4   | Kids Coding Camp      | 650.00       |
+| ... | ...                   | ...          |
+
+```sql
+-- Query 6: LEFT JOIN projects to donations to show all projects, even with no donations
+SELECT
+    p.pid,
+    p.name,
+    SUM(d.amount) AS total_amount
+FROM project p
+LEFT JOIN donation d ON p.pid = d.pid
+GROUP BY p.pid, p.name
+ORDER BY p.pid;
+```
+
+---
+
+## Query 7 – `UPDATE` query (change project status)
+
+This `UPDATE` marks the “Campus Creek Clean-Up” project as **Active** (`status = 'A'`). This is the kind of change staff would make when a project moves from planning to active fundraising. The `SELECT` before and after helps you verify the update worked.
+
+**Before UPDATE (excerpt)**
+
+| pid | name                  | status |
+| --- | --------------------- | ------ |
+| 2   | Campus Creek Clean-Up | P      |
+
+**After UPDATE (excerpt)**
+
+| pid | name                  | status |
+| --- | --------------------- | ------ |
+| 2   | Campus Creek Clean-Up | A      |
+
+```sql
+-- Query 7: UPDATE a project’s status from Planned ('P') to Active ('A')
+
+-- Check current status
+SELECT pid, name, status
+FROM project
+WHERE pid = 2;
+
+-- Perform the update
+UPDATE project
+SET status = 'A'
+WHERE pid = 2;
+
+-- Verify the change
+SELECT pid, name, status
+FROM project
+WHERE pid = 2;
+```
+
+---
+
+## Query 8 – `DELETE` query (remove a specific donation)
+
+This query deletes a **single donation record** (for example, if it was entered by mistake). We first show the row we’re about to delete, run the `DELETE`, and then show that it has been removed. Because of the foreign key constraints, we’re deleting from `donation` only (not `member` or `project`).
+
+**Before DELETE (excerpt)**
+
+| did | mid | pid | amount | received   |
+| --- | --- | --- | ------ | ---------- |
+| 100 | 20  | 2   | 60.00  | 2025-05-11 |
+
+**After DELETE (excerpt)**
+
+| did         | mid | pid | amount | received |
+| ----------- | --- | --- | ------ | -------- |
+| *(no rows)* |     |     |        |          |
+
+```sql
+-- Query 8: DELETE a single donation (e.g., did = 100)
+
+-- Show the donation we plan to delete
+SELECT did, mid, pid, amount, received
+FROM donation
+WHERE did = 100;
+
+-- Delete the row
+DELETE FROM donation
+WHERE did = 100;
+
+-- Confirm it is gone
+SELECT did, mid, pid, amount, received
+FROM donation
+WHERE did = 100;
+```
+
+---
+
+## Query 9 – Create a `VIEW` and use it
+
+This query creates a view called `donation_details` that joins member names and project names with each donation. Views like this simplify complex joins and make it easier to reuse the same “logical table” in reports or applications.
+
+**Sample Output from the VIEW (excerpt)**
+
+| did | first | last   | project_name   | amount | received   |
+| --- | ----- | ------ | -------------- | ------ | ---------- |
+| 1   | Jeff  | Lehman | HU Food Pantry | 25.00  | 2025-02-01 |
+| 2   | Lisa  | Smith  | HU Food Pantry | 50.00  | 2025-02-02 |
+| 3   | Mark  | Wenger | HU Food Pantry | 100.00 | 2025-02-03 |
+| ... | ...   | ...    | ...            | ...    | ...        |
+
+```sql
+-- Query 9: Create a VIEW and then select from it
+
+-- Create the view (run once)
+CREATE OR REPLACE VIEW donation_details AS
+SELECT
+    d.did,
+    m.first,
+    m.last,
+    p.name AS project_name,
+    d.amount,
+    d.received
+FROM donation d
+JOIN member  m ON d.mid = m.mid
+JOIN project p ON d.pid = p.pid;
+
+-- Use the view
+SELECT *
+FROM donation_details
+ORDER BY did
+LIMIT 10;
+```
+
+---
+
+## Query 10 – Transaction with `ROLLBACK`
+
+This example shows a transaction where we **temporarily increase** the goal for “HU Food Pantry” by $500, check the result, and then `ROLLBACK` so the change does not stick. This pattern is useful when testing changes or when multiple updates must either all succeed or all be undone.
+
+**Before Transaction (excerpt)**
+
+| pid | name           | goal    |
+| --- | -------------- | ------- |
+| 1   | HU Food Pantry | 5000.00 |
+
+**Inside Transaction (after UPDATE, before ROLLBACK)**
+
+| pid | name           | goal    |
+| --- | -------------- | ------- |
+| 1   | HU Food Pantry | 5500.00 |
+
+**After ROLLBACK (back to original)**
+
+| pid | name           | goal    |
+| --- | -------------- | ------- |
+| 1   | HU Food Pantry | 5000.00 |
+
+```sql
+-- Query 10: Demonstrate a transaction with ROLLBACK
+
+-- Check original goal
+SELECT pid, name, goal
+FROM project
+WHERE pid = 1;
+
+START TRANSACTION;
+
+-- Temporarily increase the goal by $500
+UPDATE project
+SET goal = goal + 500
+WHERE pid = 1;
+
+-- See the changed value inside the transaction
+SELECT pid, name, goal
+FROM project
+WHERE pid = 1;
+
+-- Decide to undo the change
+ROLLBACK;
+
+-- Confirm the goal is back to the original value
+SELECT pid, name, goal
+FROM project
+WHERE pid = 1;
+```
+
+---
+
+If you’d like, I can bundle these into a **`prj3_queries.sql`** file with comments and section headers so students can download and run it directly.
+
 
 ---
 
