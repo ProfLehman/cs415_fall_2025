@@ -26,40 +26,40 @@ At the end of the semester or year, the database will facilitate the creation of
 ```mermaid
 erDiagram
     MEMBER {
-        int mid PK
-        varchar first
-        varchar last
-        varchar title
-        varchar city
-        char state
-        char phone
-        varchar email
-        date birthdate
-        char gender
+        mid int PK
+        first varchar
+        last varchar
+        title varchar
+        city varchar
+        state char
+        phone char
+        email varchar
+        birthdate date
+        gender char
     }
 
     PROJECT {
-        int pid PK
-        varchar name
-        text description
-        decimal goal
-        date start_date
-        date end_date
-        char status
+        pid int PK
+        name varchar
+        description text
+        goal decimal
+        start_date date
+        end_date date
+        status char
     }
 
     DONATION {
-        int did PK
-        int mid FK
-        int pid FK
-        decimal amount
-        date received
-        varchar method
-        varchar note
+        did int PK
+        mid int FK
+        pid int FK
+        amount decimal
+        received date
+        method varchar
+        note varchar
     }
 
-    MEMBER ||--o{ DONATION : makes
-    PROJECT ||--o{ DONATION : receives
+    MEMBER ||--o{ DONATION : "makes"
+    PROJECT ||--o{ DONATION : "receives"
 
 ```
 
@@ -680,24 +680,24 @@ ORDER BY did;
 ```
 
 **Sample Output**
-```code
-+-----+--------+---------+-----------------------+--------+------------+
-| did | first  | last    | project_name          | amount | received   |
-+-----+--------+---------+-----------------------+--------+------------+
-|   1 | Jeff   | Lehman  | HU Food Pantry        |  25.00 | 2025-02-01 |
-|   2 | Lisa   | Smith   | HU Food Pantry        |  50.00 | 2025-02-02 |
-|   3 | Mark   | Wenger  | HU Food Pantry        | 100.00 | 2025-02-03 |
-|   4 | Sarah  | Johnson | Campus Creek Clean-Up |  20.00 | 2025-02-04 |
-|   5 | Caleb  | Brown   | Campus Creek Clean-Up |  40.00 | 2025-02-05 |
-...
-|   6 | Hannah | Miller  | Community Garden      |  30.00 | 2025-02-06 |
-|   7 | David  | Peters  | Community Garden      |  75.00 | 2025-02-07 |
-|   8 | Maria  | Lopez   | Kids Coding Camp      | 150.00 | 2025-02-08 |
-|   9 | Ethan  | Garrett | Kids Coding Camp      |  25.00 | 2025-02-09 |
-|  10 | Olivia | Turner  | Habitat Build Day     |  50.00 | 2025-02-10 |
-+-----+--------+---------+-----------------------+--------+------------+
-99 rows in set (0.012 sec)
-```
+
+    +-----+--------+---------+-----------------------+--------+------------+
+    | did | first  | last    | project_name          | amount | received   |
+    +-----+--------+---------+-----------------------+--------+------------+
+    |   1 | Jeff   | Lehman  | HU Food Pantry        |  25.00 | 2025-02-01 |
+    |   2 | Lisa   | Smith   | HU Food Pantry        |  50.00 | 2025-02-02 |
+    |   3 | Mark   | Wenger  | HU Food Pantry        | 100.00 | 2025-02-03 |
+    |   4 | Sarah  | Johnson | Campus Creek Clean-Up |  20.00 | 2025-02-04 |
+    |   5 | Caleb  | Brown   | Campus Creek Clean-Up |  40.00 | 2025-02-05 |
+    ...
+    |   6 | Hannah | Miller  | Community Garden      |  30.00 | 2025-02-06 |
+    |   7 | David  | Peters  | Community Garden      |  75.00 | 2025-02-07 |
+    |   8 | Maria  | Lopez   | Kids Coding Camp      | 150.00 | 2025-02-08 |
+    |   9 | Ethan  | Garrett | Kids Coding Camp      |  25.00 | 2025-02-09 |
+    |  10 | Olivia | Turner  | Habitat Build Day     |  50.00 | 2025-02-10 |
+    +-----+--------+---------+-----------------------+--------+------------+
+    99 rows in set (0.012 sec)
+
 ---
 
 ## Query 10 – Transaction with `ROLLBACK`
