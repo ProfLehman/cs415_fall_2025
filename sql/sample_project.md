@@ -1,5 +1,7 @@
 # CS415 Database Sample Project – Fall 2025 - Draft
 
+---
+
 ### Database Summary Report (10 points)
 
 * 2 or 3 paragraphs describing the business/organization/person that will use your database.
@@ -124,6 +126,8 @@ CREATE TABLE IF NOT EXISTS `loan` (
 ENGINE = InnoDB;
 ```
 
+---
+
 ### Insert Data (20 points)
 
 Create a single SQL code block to insert data.
@@ -179,6 +183,8 @@ INSERT INTO `loan` (`lid`, `out`, `returned`, `sid`, `cid`, `days`) VALUES (7, '
 
 ```
 
+---
+
 ### Queries (60 points)
 
 Create ten SQL code blocks that demonstrate the following queries. For each query, include a **2–3 sentence description** before 
@@ -216,6 +222,7 @@ select * from days * 24 as hours from loan;
 11. Create a `View` and demonstrate using this view.
 12. Create a `Transaction` with either `ROLLBACK` or `COMMIT` and demonstrate this transaction.
 
+---
 
 ### Reports (20 points) 
 
@@ -227,6 +234,7 @@ Connect to an external reporting tool (or export your data) and create two repor
 Use Excel, Access, PowerBI, or any other reporting tool.  Post your report and include a link to each report as a .pdf (or viewable image). 
 In one or two paragraphs, describe the reporting software you used and the purpose of each report.
 
+---
 
 ### Delete Tables (10 points)
 
@@ -251,6 +259,8 @@ drop table camera_type;
 drop table student;
 ---
 ```
+
+---
 
 ### Poster and Presentation (20 points)
 
