@@ -1,4 +1,6 @@
-# CS415 Database Sample Project – Fall 2025 - Draft
+# CS415 Database Sample Project – Fall 2025
+
+Note: Click on `code` to see markdown
 
 ---
 
@@ -804,20 +806,22 @@ Connect to an external reporting tool (or export your data) and create two repor
 Use Excel, Access, PowerBI, or any other reporting tool.  Post your report and include a link to each report as a .pdf (or viewable image). 
 In one or two paragraphs, describe the reporting software you used and the purpose of each report.
 
-**Sample Access Report (displayed on this page)**
+---
 
+**Sample Excel Chart (displayed on this page)**
+![Sample Excel Chart!](excel_sample_chart.png "Sample Excel Chart")
+
+**Sample Excel Chart (link)**
+[Sample Excel Chart!](excel_sample_chart.png "Sample Excel Chart")
+
+---
+
+**Sample Access Report (displayed on this page)**
 ![Sample Access Report!](access_sample_report.png "Sample Access Report")
 
 
 **Sample Access Report (link)**
-
 [Sample Access Report!](access_sample_report.png "Sample Access Report")
-
-
-**Sample Excel Chart (displayed on this page)**
-
-![Sample Excel Chart!](excel_sample_chart.png "Sample Excel Chart")
-
 
 ---
 
@@ -846,14 +850,14 @@ DROP TABLE IF EXISTS project;
 
 ---
 
-### Poster and Presentation (20 points)
+### Poster and Presentation
 
-(15 points) Create a poster describing your Database Project using the template provided.  Host poster as .PDF on GitHub, include link to file in your documentation.
+Create a poster describing your Database Project using the template provided.  Host poster as .PDF on GitHub, include link to file in your documentation.
 
 [Poster PDF](poster.pdf)
 
 
-(5 points) Deliver a five-minute presentation during finals that describes your database design, demonstrates your SQL queries, 
+Deliver a five-minute presentation during finals that describes your database design, demonstrates your SQL queries, 
 and describing any challenges you encountered and insights you gained from the project.
 
 
