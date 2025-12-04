@@ -1,6 +1,6 @@
 # CS415 Database Sample Project – Fall 2025
 
-Note: Click on `code` to see markdown
+Note: Click on `Code` to see markdown
 
 ---
 
