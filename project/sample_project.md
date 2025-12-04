@@ -804,6 +804,11 @@ Connect to an external reporting tool (or export your data) and create two repor
 Use Excel, Access, PowerBI, or any other reporting tool.  Post your report and include a link to each report as a .pdf (or viewable image). 
 In one or two paragraphs, describe the reporting software you used and the purpose of each report.
 
+Sample Access Report
+
+![Sample Access Report!](access_sample_report.png "Sample Access Report")
+
+
 ---
 
 ### Delete Tables
