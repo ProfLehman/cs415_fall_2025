@@ -333,7 +333,7 @@ INSERT INTO donation (did, mid, pid, amount, received, method, note) VALUES
 
 ---
 
-### Queries (60 points)
+### Queries
 
 Required Queries using `member`, `project`, and `donation` tables.
 
@@ -804,9 +804,19 @@ Connect to an external reporting tool (or export your data) and create two repor
 Use Excel, Access, PowerBI, or any other reporting tool.  Post your report and include a link to each report as a .pdf (or viewable image). 
 In one or two paragraphs, describe the reporting software you used and the purpose of each report.
 
-Sample Access Report
+**Sample Access Report (displayed on this page)**
 
 ![Sample Access Report!](access_sample_report.png "Sample Access Report")
+
+
+**Sample Access Report (link)**
+
+[Sample Access Report!](access_sample_report.png "Sample Access Report")
+
+
+**Sample Excel Chart (displayed on this page)**
+
+![Sample Excel Chart!](excel_sample_chart.png "Sample Excel Chart")
 
 
 ---
