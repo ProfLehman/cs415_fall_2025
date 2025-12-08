@@ -26,6 +26,8 @@ This project offers you the opportunity to integrate the **Core Competencies** a
 
 All project code and documentation must be hosted on Github using Markdown for formatting and SQL code blocks.
 
+Note: Make sure you **commit changes** as you create your documentation.  Each time you commit you are creating a point at which you can "revert" or "undo" your changes.  Also, following the best **3:2:1 backup strategies**, you should create two backup copies of your project, ie, copy to the local drive and copy to the cloud.
+
 ---
 ## Requirements
 
