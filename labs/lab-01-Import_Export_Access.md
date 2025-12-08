@@ -13,7 +13,9 @@ See [office Portal](https://portal.office.com) to download Access on a Windows c
 Pick a **single table** from your final project to complete Parts 1 to 4.
 
 ### Part 1.  Backup Database
-Save a copy of your table create and insert statements using mysqldump in a file called lab1.sql
+Save a copy of your table create and insert statements using **mysqldump** in a file called lab1.sql
+
+Note: The purpose of this part of the assignment is to learn to use mysqldump to create a backup, thus you must use mysqldump to create the file rather than hand-coding statements.
 
 ### Part 2.  Comma-Delimited (CSV – comma-separated values)
 Save the table as a comma-delimited file called lab1.csv
